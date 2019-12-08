@@ -1,0 +1,372 @@
+We will now put the machinery developed so far to work by considering the so-called momentum operator for two cases: a compact interval $[a,b]\ss\R$, and a circle. As the name suggests, this operator is meant to be the QM observable who's eigenvalues are the momenta of the system. It is clear, therefore, that we require (recall $\cH = L^2(\R^d)$ up to unitary equivalence)
+\bse 
+\cP \cl \cD_{\cP} \to L^2(\R^d)
+\ese
+to be self adjoint. 
+
+We will specialise to the case of $d=1$ in order to simplify things, while also demonstrating the main ideas. The concepts can be extended to higher values of $d$. We will also set $\hbar =1$ throughout this section.
+
+\subsection{The Momentum Operator}
+
+\bd 
+The \emph{momentum operator}\index{momentum operator} is an operator $\cP$ given by 
+\bi{rrCl}
+\cP \cl & \cD_{\cP} & \to & L^2(\R)\\
+& \psi & \mapsto & (-i) \psi',
+\ei
+where the prime indicates a derivative. 
+\ed
+
+The first obvious question is why does this deserve its name? (i.e. how is it related to what we know classically as the momentum?) The answer, unfortunately, can not yet be provided in full detail as it requires us to know the spectral theorem and Stone-von Neumann theorem. However these details are provided here as they will help later when discussing these theorems. For now we must just take it in faith.\footnote{Very unlike Dr. Schuller.}
+
+There is yet another important question we must ask: how do we choose $\cD_{\cP}$? The immediate response might be `such that the derivative is square integrable.' However, this is not good enough. We also require that $\cP$ be self adjoint and, as we have seen previously, the concept of self adjointness depends heavily on the domains considered. 
+
+Luckily, not all hope is lost. The method will be as follows: guess a reasonable $\cD_{\cP}$ and then search for a self adjoint extension, should one exist. Before doing so, though, we will first introduce some new definitions that will prove invaluable. 
+
+\subsection{Absolutely Continuous Fucntions and Sobolev Spaces}
+
+During the calculations that follow we will naturally encounter three spaces: 
+
+\ben[label=(\roman*)]
+\item The space of once-continuously differential functions over some interval, $I$; $C^1(I)$, 
+\item The Sobolev space $H^1(I)$, and 
+\item The space of absolutely continuous functions; $AC(I)$.
+\een
+
+As we shall see they are related via 
+\bse 
+ C^1(I) \se H^1(I) \se AC(I),
+\ese
+and so they will provide a convenient way to compare the domains $\cD_{\cP}$, $\cD_{\cP^*}$, etc, to test for self adjointness.
+
+\bd
+Let $I \ss \R$. A function $\psi\cl I \to \C$ is called \emph{absolutely continuous}\index{absolutely continuous} if there exists a Lebesgue integrable function $\rho\cl I \to \C$ such that 
+\bse
+\psi(x) = \psi(a) + \int_a^x\rho(y)dy,
+\ese
+for all compact subsets $[a,x]\se I$.
+\ed
+
+\bc 
+Given a absolutely continuous function, it is clear that $\rho =_{a.e.} \psi'$, where the almost everywhere condition comes from the fact that a Lebesgue integral does not distinguish two elements that differ by a measure zero.
+\ec
+
+\bd
+The \emph{set of absolutely continuous functions} is simply 
+\bse 
+AC(I) := \{\psi\in L^2(I) \, | \, \psi \text{ is absolutely continuous}\}.
+\ese 
+\ed
+
+\bd 
+Let $\Omega \ss \R$ be open, and $\psi\cl \Omega\to \C$ be Lebesgue measurable. $\psi$ is called \emph{$p$-locally integrable}\index{$p$-locally integrable} if, for $1\leq p \leq \infty$,
+\bse 
+\int_K |\psi(x)|^p dx < \infty,
+\ese 
+for all compact subsets $K\ss \Omega$. The set of all functions is
+\bse 
+L^p_{loc}(\Omega) := \{ \psi \cl \Omega \to \C \, | \, \psi \text{ measurable}, \psi|_K \in L^p(K), \forall K \ss \Omega, K \text{ compact}\}.
+\ese 
+\ed 
+
+\br 
+For case $p=1$, we just call $\psi$ locally integrable.
+\er 
+
+\bt 
+Every $\psi\in L^p(\Omega)$ for $1\leq p \leq \infty$ is locally integrable. In other words $L^p(\Omega) \ss L^1_{loc}(\Omega)$.
+\et 
+
+\bd
+A function $\psi \in L^1_{loc}(\Omega)$ is called \emph{weakly differentiable}\index{weakly differentiable} if there exists a $\rho\in L^1_{loc}(\Omega)$ such that 
+\bse 
+\int_{\Omega} \psi(x) \varphi'(x) dx = -\int_{\Omega} \rho(x)\varphi dx,
+\ese 
+for all $\varphi \in C^{\infty}_c(\Omega)$\footnote{The subscript indicates that $\varphi$ vanishes at the limits of integration.}. This function is known as the \emph{weak derivative of $\psi$}\index{weak derivative} and is denoted by $\rho := \psi'$.
+\ed 
+
+\bc
+Note that for any weakly differentiable function the integration by parts result,
+\bse 
+\int_{\Omega} \psi(x) \varphi'(x) dx = -\int_{\Omega} \psi'(x) \varphi(x) dx,
+\ese 
+holds for all $\varphi \in C^{\infty}_c(\Omega)$.
+\ec 
+
+\bc 
+Given that $\psi \in C^k(\Omega)$, $\varphi\in C^{\infty}_c(\Omega)$, we can show by induction that 
+\bse
+\int_{\Omega} \psi(x) \varphi^{(\alpha)}(x) = (-1)^{\alpha} \int_{\Omega} \psi^{(\alpha)}(x) \varphi(x), 
+\ese 
+where $\psi^{(\alpha)}(x)$ means the $\alpha$-order derivative of $\psi(x)$. 
+\ec
+
+\br 
+In the above Corollary we have used the fact that we are only considering one dimensional problems here. The expression is much the same for higher dimensional problems, however one has to take into account the different derivative directions. 
+\er 
+
+\bd
+Let $\Omega\ss\R$ be open, $k\in \N$ and $1 \leq p\leq \infty$. The \emph{Sobolev Space}\index{Sobolev Space} is the space with set
+\bse 
+W^{k,p} := \{ \psi \in L^p(\Omega)\cap W^k(\Omega) \, | \, \psi^{(\alpha)} \in L^p(\Omega), \forall |\alpha| \leq k\},
+\ese 
+where $W^k$ is the set of all locally integrable functions that also have weak derivates of order $\alpha$ for all $|\alpha| \leq k$. We introduce the notation $H^k(\Omega) := W^{k,2}(\Omega)$. 
+\ed 
+
+\br 
+Sobolev spaces can be made into Banach spaces by equipping them with a norm and $H^k(\Omega)$ can be made into a Hilbert space. 
+\er 
+
+\bp
+\label{prp:SobolevAC}
+We can rewrite the space $H^1(\Omega)$ as 
+\bse
+H^1(\Omega) := \{\psi\in AC(\Omega) \, | \, \psi' \in L^2(\Omega)\},
+\ese
+where $\psi'$ denotes the normal notion of derivative. 
+\ep
+
+\bq
+See Theorem 7.13 in `A first Course in Sobolev Spaces, Giovanni Leoni'.
+\eq 
+
+\subsection{Momentum Operator on a Compact Interval}
+
+Let's now consider the case where the physical space is some compact interval in $\R$ (i.e. we have a particle moving along the bottom of a well). W.l.o.g. take $[0,2\pi] =: I$, the justification for which will is clear from the fact that next we will consider a circle. 
+
+We now need to come up with a reasonable guess for the domain $\cD_{\cP}$. First recall 
+\bi{rrCl}
+\cP \cl & \cD_{\cP} & \to & L^2(I)\\
+& \psi & \mapsto & (-i) \psi'.
+\ei
+It is therefore reasonable to restrict ourselves to $\psi \in C^1(I)$. Equally, physically we expect the function to vanish at the boundaries (the walls of the well). This gives us our first guess 
+\bse
+\cD_{\cP} := \{\psi\in C^1(I) \, | \, \psi(0)=0=\psi(2\pi)\} =: C^1_c(I).
+\ese
+
+The question still remains, though, as to whether $\cP$ is self adjoint. Recalling the results of Lecture 7, it is first instructive to see if $\cP$ is symmetric. 
+
+\subsubsection*{A. \ Symmetric?}
+
+Let $\psi,\varphi\in\cD_{\cP}$, then 
+\bi{rCl}
+\braket{\psi}{\cP\varphi} & = & \int_0^{2\pi} dx \overline{\psi}(x) (-i)\varphi'(x) \\
+& = & -\int_0^{2\pi} dx (-i)\overline{\psi'}(x) \varphi(x) -i\big[\overline{\psi}(x)\varphi(x)\big]^{2\pi}_0 \\
+& = & \int_0^{2\pi} dx \overline{(-i)\psi'}(x)\varphi(x) \\
+& = & \braket{\cP \psi}{ \varphi},
+\ei 
+where integration by parts was used. So, yes $\cP$ is symmetric.
+
+\subsubsection*{B. \ Self Adjoint?}
+From above we know that $\cP \se \cP^*$, and so $\cD_{\cP} \se \cD_{\cP^*}$, so we need to ask the question of how $\cP^*$ behaves outside the domain $\cD_{\cP}$. The obvious answer is to just extend the definition to be 
+\bi{rrCl}
+\cP^* \cl & \cD_{\cP^*} & \to & L^2(I)\\
+& \psi & \mapsto & (-i) \psi'.
+\ei
+Note that the $\psi$ here is not necessarily the same as the $\psi$ in above. The same symbol is just used and the context tells us where it lives. 
+
+All that is left to check is the domain $\cD_{\cP^*}$. From the definition of the adjoint we have 
+\bse
+\psi\in\cD_{\cP^*} \implies \exists \eta \in L^2(I) \cl \forall \varphi\in\cD_{\cP} \cl \braket{\psi}{\cP\varphi} = \braket{\eta}{\varphi},
+\ese
+with $\eta := \cP^*\psi$. Before proceeding further with the calculation first introduce a function $N\cl I \to \C$ such that $\eta =_{a.e.} N'$. Note $N$ is Lebesgue integrable and that the almost everywhere condition is sufficient as $\eta$ appears in a Lebesgue integral. Therefore we have, 
+\bi{rCl}
+\int_0^{2\pi} dx \overline{\psi}(x) (-i)\varphi'(x) & = & \int_0^{2\pi} dx \overline{N'}(x)\varphi(x)  \\
+\int_0^{2\pi}dx  \big[ \overline{\psi}(x)(-i)\varphi'(x) + \overline{N}(x)\varphi'(x) \big] & = & \big[ \overline{N}(x)\varphi(x) \big]_0^{2\pi} \\
+-i\int_0^{2\pi} dx \overline{\big[ \psi(x) - iN(x) \big]}\varphi'(x) & = & 0 \\
+\braket{\psi - iN}{\varphi'}& = & 0, 
+\ei 
+which tells us that 
+\bse
+\psi - iN \in \{ \varphi' \,|\, \varphi\in\cD_{\cP}\}^{\perp}.
+\ese 
+
+This does not appear to have got us any closer to determining the domain $\cD_{\cP^*}$. However consider the following two Lemmas. 
+
+\bl 
+$\{\varphi' \,|\, \varphi\in\cD_{\cP}\} = \{\xi \in C^0(I)\,|\,\int_0^{2\pi} \xi(x) dx = 0 \}$.
+\el 
+
+\bq
+Let $A := \{\varphi' \,|\, \varphi\in\cD_{\cP}\}$ and $B:= \{\xi \in C^0(I)\,|\,\int_0^{2\pi} \xi(x) dx = 0 \}$. 
+
+Now consider a $\varphi'\in A$, then 
+\bse 
+\int_0^{2\pi} \varphi'(x) dx = \big[\varphi(x)\big]^{2\pi}_0 = 0,
+\ese 
+so clearly $\xi:=\varphi$ and $A\se B$.
+
+Now consider a $\xi\in B$ and define 
+\bse
+\varphi(x) := \int_0^{x} \xi(y) dy.
+\ese 
+Then, since $\xi\in C^0(I)$ it follows that $\varphi\in C^1(I)$. It also follows that $\varphi(0)=0=\varphi(2\pi)$ and so $\varphi' \in A$ and $B \se A$. 
+\eq 
+
+\bl 
+Let $\{1\}$ denote the set consisting of the element $1\in L^2(I)$ with $1(x) = 1_{\C}$ for all $x\in I$. Then
+\bse 
+\overline{\{\varphi'\,|\, \varphi\in\cD_{\cP}\}} = \{1\}^{\perp}.
+\ese
+\el 
+
+\bq 
+From the previous Lemma we have 
+\bi{rCl}
+\overline{\{\varphi'\,|\, \varphi\in\cD_{\cP}\}} & = & \overline{\{\xi\in C^0(I)\,|\, \braket{1}{\xi} = 0\}} \\
+& = & \{\xi\in \overline{C^0(I)} \,|\, \braket{1}{\xi} = 0\} \\
+& = & \{\xi\in L^2(I) \,|\, \braket{1}{\xi} = 0\} \\
+& = & \{1\}^{\perp},
+\ei 
+where the fact that $C^0(I)$ is dense in $L^2(I)$ to go from the second to third line. 
+\eq 
+
+Putting this all together we have 
+\bi{rCl}
+\psi - iN \in A^{\perp} & = & \overline{A^{\perp}} \\
+& = & (A^{\perp})^{\perp\perp} \\
+& = & (A^{\perp\perp})^{\perp} \\
+& = & \overline{A}^{\perp} \\
+& = & \{1\}^{\perp\perp} \\
+& = & \overline{\{1\}} \\
+& = & \{ C\cl I \to \C \,|\, x\mapsto C_{\C} \},
+\ei 
+where $C_{\C}$ is a constant in $\C$. Recalling that $N$ is Lebesgue integrable we see that 
+\bse 
+\psi(x) = C_{\C} + iN(x) \in AC(I),
+\ese 
+and so 
+\bse 
+\cD_{\cP^*}\se AC(I).
+\ese 
+Now recalling 
+\bi{rrCl}
+\cP^* \cl & \cD_{\cP^*} & \to & L^2(I)\\
+& \psi & \mapsto & (-i) \psi',
+\ei
+and using \Cref{prp:SobolevAC}, we have
+\bse 
+\cD_{\cP^*}\se H^1(I).
+\ese 
+Finally we see that because all of the integration by parts results above were of the form 
+\bse 
+\int_I dx \psi'(x) \varphi(x) = \int_I \psi(x) \varphi'(x),
+\ese 
+for arbitrary $\varphi\in C^1_c(I)$. Now since $C^{\infty}_c(I) \ss C^1_c(I)$, the integrals also hold for any $\varphi\in C^{\infty}_c(I)$, but this is just the condition for weak derivative and so we see that
+\bse 
+\cD_{\cP^*} = H^1(I),
+\ese 
+and 
+\bse 
+\cD_{\cP} \subsetneqq \cD_{\cP^*},
+\ese 
+so $\cP$ is not self adjoint. 
+
+\subsubsection*{C. \ Essentially Self Adjoint?}
+We have managed to show that our initial guess for $\cP$ is not self adjoint. The next step is to ask if there is a self adjoint extension and if this extension is unique. Recall that a symmetric operator has a unique self adjoint extension if it is essentially self adjoint (i.e. $\overline{\cP} := \cP^{**}$ is self adjoint). We follow the same method as above, 
+
+\bse
+\psi\in \cD_{\overline{\cP}} \implies \forall \varphi\in\cD_{\cP^*} \cl \braket{\psi}{\cP^*\varphi} = \braket{\overline{\cP} \psi}{ \varphi}.
+\ese 
+
+Now, recall that for a symmetric operator $\cP \se \overline{\cP} \se \cP^*$ so it's clear that 
+
+\bse
+\braket{\overline{\cP} \psi}{ \varphi } = \braket{ \cP^*\psi}{\varphi} 
+\ese 
+in the above. Writing as integrals we have 
+
+\bi{rCl}
+\int_0^{2\pi} dx \overline{\psi}(x) \varphi'(x) & = & \int_0^{2\pi}dx \overline{(-i)\psi'}(x)\varphi(x) \\
+-i\int_0^{2\pi}dx \big[ \overline{\psi}(x)\varphi'(x) - \overline{\psi}(x)\varphi'(x)\big] & = & i \big[\overline{\psi}(x)\varphi(x)\big]^{2\pi}_0 \\
+0 & = & \overline{\psi}(2\pi)\varphi(2\pi) - \overline{\psi}(0)\varphi(0),
+\ei 
+where again integration by parts has been used. We need to be careful in what conclusions we draw from this final statement, though. $\varphi\in\cD_{\cP^*} = H^1(I)$, which places no restrictions on the values of $\varphi$ on the boundary, nor does it make any conditions between the two values $\varphi(0)$ and $\varphi(2\pi)$ --- they are independently arbitrary. We must, therefore, conclude that 
+\bse
+\overline{\psi}(2\pi) = \psi(2\pi) = 0 = \overline{\psi}(0) = \psi(0),
+\ese 
+and so, at best,
+\bse
+\cD_{\overline{\cP}} = \{ \psi\in H^1(I) \,|\, \psi(2\pi)=0=\psi(0)\} \subsetneqq \cD_{\cP^*},
+\ese 
+and so $\overline{\cP}\neq \cP^*$, which, after taking the adjoint of both sides, tells us that $\overline{\cP} \neq \overline{\cP}^*$, and so $\cP$ is not even essentially self adjoint. 
+
+\subsubsection*{D. \ Defect Indices}
+
+We only have one tool left to check for a self adjoint extension of $\cP$, check the defect indices to see if a self adjoint extension even exists. Recall 
+\bse
+d_+ := \dim\big( \ker(\cP^* - i)\big), \qquad d_- := \dim\big( \ker(\cP^* + i)\big),
+\ese 
+and a symmetric operator has a (not necessarily unique) self adjoint extension if $d_+ = d_-$. We therefore need to determine how many $\psi\in\cD_{\cP^*}$ lie in $\ker(\cP^*\mp i)$:
+\bi{rCl}
+(\cP^* \mp i) \psi & = & 0 \\
+-i\psi' \mp i\psi & = & 0 \\
+\psi(x) & = & a_{\pm} e^{\mp x}
+\ei 
+for $a_+, a_- \in \C$. There is only one solution for each and so $d_+ = 1 = d_-$. We therefore know that there does exist at least one self adjoint extension of $\cP$\footnote{Whew!}, however we don't know the form of any of them.\footnote{Not whew!}
+
+\br 
+If instead of a compact interval we take a half line $I = [a,\infty)$, then $d_+ \neq d_-$ and so there is no self adjoint extension of $\cP$, meaning there is no notion of a QM momentum in this case. Note however that people often talk about free particles along an infinite line in QM, however they always require the wave function ($\psi$) to vanish at $\pm \infty$. This is clearly just the same as taking a large, yet finite, compact interval $I=[a,b]$. 
+\er 
+
+\subsection{Momentum Operator on a Circle}
+
+We now want to repeat all of the above but for a circle instead of a finite line segment. Fortunately almost all the work is done, the only slight difference is in the definition of $\cD_{\cP}$: 
+\bse 
+\cD_{\cP} := \{ \psi \in C^1(I) \,|\, \psi(2\pi) = \psi(0)\},
+\ese 
+which is exactly the same as before apart from now we do not require $\psi$ to vanish at the boundary. We still have 
+\bi{rrCl}
+\cP \cl & \cD_{\cP} & \to & L^2(\R)\\
+& \psi & \mapsto & (-i) \psi',
+\ei
+so it follows that $\cP_I \subsetneqq \cP_c$, where the $I$ and $c$ denote interval and circle respectively. In other words $\cP_c$ is an extension of $\cP_I$.
+
+\subsubsection*{A. \ Symmetric?}
+
+Repeating the steps from above it is clear that $\cP$ is still symmetric. Note however, it is symmetric for a different reason: before we had $\big[ \psi(x)\varphi(x)\big] =0$ as both $\psi$ and $\varphi$ vanished at the limits, whereas now it holds simply because $\psi(2\pi)=\psi(0)$ and likewise for $\varphi$. 
+
+\subsubsection*{B. \ Self Adjoint?}
+As before we have 
+\bse
+\psi\in\cD_{\cP^*_c} \implies \forall \varphi\in\cD_{\cP_c} : \braket{\psi}{\cP_c\varphi}= \braket{ \cP^*_c\psi}{ \varphi}.
+\ese 
+However, recalling that the adjoint flips the inequality sign we have $\cP_c^* \se \cP^*_I$ and therefore $\cD_{\cP_c^*}\se H^1(I)$. We can, therefore, replace the unknown $\cP_c^*$ with the known $\cP_I^*$ in the final part of the above, i.e. 
+\bse 
+\braket{\cP^*_c\psi}{ \varphi} = \braket{\cP^*_I\psi}{ \varphi}.
+\ese 
+Then, following the exactly as before, we arrive at 
+\bi{rCl} 
+0 & = & i \big[ \overline{\psi} \varphi(x) \big]^{2\pi}_0 \\
+& = & \big[\overline{\psi}(2\pi) - \overline{\psi}(0)\big] \varphi(0) \\
+\implies \psi(2\pi) & = & \psi(0),
+\ei
+giving us\footnote{Note we are OK extend the domain to all of $H^1(I)$ provided we impose the conditions above.}
+\bse
+\cD_{\cP^*_c} := \{ \psi\in H^1(I) \,|\, \psi(2\pi) = \psi(0)\} =: H^1_{cyc}(I),
+\ese 
+so $\cD_{\cP_c}\subsetneqq \cD_{\cP_c}^*$, and therefore $\cP_c$ is not self adjoint. 
+
+\subsubsection*{C. \ Essentially Self Adjoint?}
+
+Again, as before, we have $\cP_c \se \overline{\cP_c}\se\cP_c^*$ and
+\bse 
+\psi\in\cD_{\overline{\cP_c}} \implies \forall \varphi\in \cD_{\cP_c^*} \cl \braket{\psi}{\cP^*_c\varphi} = \braket{\overline{\cP_c}\psi}{ \varphi} = \braket{\cP_c^*\psi}{\varphi}, 
+\ese 
+which results in
+\bi{rCl} 
+0 & = & i \big[ \overline{\psi} \varphi(x) \big]^{2\pi}_0 \\
+& = &  \big[\overline{\psi}(2\pi) - \overline{\psi}(0)\big]\varphi(0) \\
+\implies \psi(2\pi) & = & \psi(0),
+\ei
+and so 
+\bse
+\cD_{\overline{\cP_c}} := H^1_{cyc}(I) = \cD_{\cP_c^*},
+\ese 
+so we conclude that $\cP_c$ is essentially self adjoint and $\overline{\cP_c}$ is the \textit{unique} self adjoint extension. 
+
+To summarise, we have found \textit{the} momentum operator on a circle: 
+\bi{rrCl}
+\cP_{S^1} \cl & H^1_{cyc}(I) & \to & L^2(\R)\\
+& \psi & \mapsto & (-i) \psi'.
+\ei

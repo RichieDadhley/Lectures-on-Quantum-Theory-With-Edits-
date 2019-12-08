@@ -1,0 +1,267 @@
+As has been remarked, the world and everything in it are quantum by nature. There is no `classical' ball which we make quantum, there is a quantum ball that we approximate classically. Equally there isn't a `classical' harmonic oscillator which we use to construct the quantum one. We will thus \emph{not} entertain any type of so called `\emph{quantisation}' idea --- that of starting from the classical system and somehow transforming it into the quantum counter part. We shall demonstrate explicitly in the first section why this is not a good idea, but a quick argument explains it.
+
+Imagine you have some general theory. Of course you can obtain any special theory related to it by taking approximations/constraints, however you have no real hope of doing the opposite --- you should not expect to be able to obtain the general theory by `unapproximating' the special one. Quantum mechanics is the general theory, with classical mechanics is the special one. It is therefore a ridiculous idea to try and obtain quantum theory this way.
+
+\subsection{What People Say}
+
+Despite the clear message above, people still choose to do such a thing; they take the equations governing a system classically and `replace them' with the quantum versions. To be fair, it is not that the physics community are unaware of the above fact, it is simply that they argue `we only do it in special cases where we know no problems arise.' 
+
+However, even in said special circumstances, we argue, it is still a terribly misleading and potentially devastating (theoretically speaking!) idea. We shall quickly highlight why this is. 
+
+The procedure is as follows. Take the function representing your classical observable $f(p,q)$, where $p$ is the position and $q$ the momentum, and simply rewrite the function but replacing $p$ with the quantum mechanical operator $P$ and $q$ with $Q$.
+\bse 
+f(p,q) \squiggle f(P,Q)
+\ese 
+
+For example the energy observable for the harmonic oscillator 
+\bse 
+h(p,q) = \frac{1}{2m}p^2+\frac{m\omega^2}{2}q^2 \squiggle H := h(P,Q) = \frac{1}{2m}P\circ P + \frac{m\omega^2}{2}Q\circ Q 
+\ese 
+It follows from 
+\bse
+P,Q : S(\R) \to S(\R),
+\ese  
+with 
+\bse 
+(P\psi)(x) := -i\hbar \psi'(x), \qquad  (Q\psi)(x) := x\psi(x),
+\ese 
+that 
+\bse
+H : S(\R) \to S(\R),
+\ese  
+with 
+\bse 
+(H\psi)(x) := -\frac{\hbar^2}{2m}\psi''(x) +\frac{m\omega^2}{2}x^2\psi(x).
+\ese 
+This often appears as 
+\bse 
+H := -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} +\frac{m\omega^2}{2}x^2,
+\ese 
+or for a more general case (i.e. not a harmonic oscillator) as 
+\bse 
+H := -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + V(x),
+\ese 
+where $V(x)$ is the potential associated to the system.
+
+This all looks very nice, and indeed it is correct, however there is a serious problem here. Classically we could add 
+\bse 
+(pq-qp)g(p,q),
+\ese 
+for some other observable of the system $g(p,q)$ without changing anything, as the bracket vanishes. That is 
+\bse 
+f(p,q) = f(p,q) + (pq-qp)g(p,q).
+\ese 
+However if we then applied the `$\squiggle$' approach to this we would get 
+\bse 
+f(P,Q) = f(P,Q) + [P,Q]g(P,Q) = f(P,Q) + i\hbar g(P,Q),
+\ese 
+which is obviously not true for general $g(P,Q)$. So it appears that even in these simple cases where `there is no danger', there is a serious theoretical problem. For this reason we shall just not do this at all, and instead simply define what we mean by the energy observable (or \emph{Hamiltonian}) of our system and proceed from there. 
+
+\subsection{The Quantum Harmonic Oscillator}
+In keeping with Axiom 1, we need an underlying Hilbert space; we use $\cH=L^2(\R)$. We also have (in agreement with Axiom 4) an energy observable, known as the Hamiltonian of the system,
+\bse 
+H := \frac{1}{2m}P\circ P + \frac{1}{2}m\omega^2 Q\circ Q.
+\ese 
+
+However, a note must be made. If $H$ is to be an observable, it must be self adjoint. But in the above expression we have used the essentially self adjoint $Q,P:S(\R)\to S(\R)$. This is not a large worry as we can simply take their unique self adjoint extensions. We still have a problem though. Although $P\circ P$ and $Q\circ Q$ (as the self adjoint extensions) will be self adjoint, their \emph{sum} need not be, as the adjoint does not necessarily distribute across the addition. 
+
+What we shall do is consider the essentially self adjoint operators throughout, and then at the end we shall present Theorem that allows us to conclude that $H$ (constructed from the essentially self adjoint operators) is essentially self adjoint, and so a unique self adjoint extension exists. 
+
+As above, we shall not employ a different notation for the self adjoint and essentially self adjoint operators, but instead infer which we are dealing with by considering the domains. 
+
+\subsection{The Energy Spectrum}
+
+Recall that the spectrum of an operator is given by
+\bse 
+\sigma(H) = \sigma_p(H) \cup \sigma_c(H).
+\ese 
+The aim of this lecture is to calculate $\sigma_p(H)$ and show that $\sigma_c(H)=\varnothing$. 
+
+\bd 
+Consider the operators $Q,P:S(\R)\to S(\R)$. Then define $a_{\pm} : S(\R) \to S(\R)$ via
+\bse 
+a_{\pm} := \sqrt{\frac{m\omega}{2\hbar}} Q \mp \frac{i}{\sqrt{2\hbar m \omega}} P.
+\ese 
+\ed 
+
+\bc 
+We can re-express the Hamiltonian as 
+\bse 
+H = \hbar \omega \bigg( a_+a_- + \frac{1}{2}\id_{S(\R)}\bigg).
+\ese 
+\ec 
+
+\bq 
+The proof follows from direct substitution. Let 
+\bse 
+\alpha := \sqrt{\frac{m\omega}{2\hbar}}, \qquad \beta := \frac{1}{\sqrt{2\hbar m \omega}}
+\ese 
+\bi{rCl}
+H & = & \hbar\omega \bigg((\alpha Q - i\beta P)(\alpha Q + i\beta P) +\frac{1}{2}\id_{S(\R)}\bigg) \\
+& = & \hbar\omega \bigg( \alpha^2Q\circ Q + \beta^2P\circ P + i\alpha\beta (QP-PQ) + \frac{1}{2}\id_{S(\R)}\bigg) \\
+& = & \hbar\omega \bigg( \alpha^2 Q\circ Q + \beta^2 P\circ P + i\alpha\beta [Q,P] + \frac{1}{2}\id_{S(\R)}\bigg) \\
+& = &  \hbar\omega\bigg( \frac{m\omega}{2\hbar}Q\circ Q + \frac{1}{2\hbar m\omega} P \circ P + i \frac{1}{2\hbar} (i\hbar)\id_{S(\R)} + \frac{1}{2}\id_{S(\R)}\bigg) \\
+& = & \frac{1}{2m}P\circ P + \frac{m\omega^2}{2}Q \circ Q,
+\ei 
+where we have used $[Q,P]=i\hbar\id_{S(\R)}$.
+\eq 
+
+\bp 
+The following commutation relations hold:
+\ben[label=(\roman*)]
+\item $[a_-,a_+]=\id_{S(\R)}$,
+\item $[H,a_+]=\hbar\omega a_+$,
+\item $[H,a_-]=-\hbar\omega a_-$.
+\een 
+\ep 
+
+\bq 
+They all follow from direct substitution, using $H$ as written in the previous Corollary. 
+\ben[label=(\roman*)]
+\item \bi{rCl}
+[a_-,a_+] & = & [\alpha Q+i\beta P, \alpha Q -i\beta P] \\
+& = & \alpha^2[Q,Q] -i\alpha\beta [Q,P] + i\beta\alpha[P,Q] +\beta^2[P,P] \\
+& = & -i2\alpha\beta [Q,P] \\
+& = & -i2\alpha\beta (i\hbar)\id_{S(\R)} \\
+& = & \frac{2\hbar}{2\hbar} \id_{S(\R)} \\
+& = & \id_{S(\R)},
+\ei 
+where we have made use of the linearity of the commutator bracket. 
+\item \bi{rCl}
+[H,a_+] & = & \bigg[\hbar\omega a_+a_- +\frac{1}{2}\id_{S(\R)}, a_+\bigg] \\
+& = & \hbar\omega [a_+a_-,a_+] + \frac{1}{2}[\id_{S(\R)},a_+] \\
+& = & \hbar\omega \big( a_+[a_-,a_+] + [a_+,a_+]a_-\big) \\
+& = & \hbar\omega a_+\id_{S(\R)} \\
+& = & \hbar\omega a_+
+\ei 
+\item This follows exactly analogously to (ii).
+\een 
+\eq 
+
+\br 
+Strictly speaking in the previous proof we should have considered the action of the commutator on an element of $S(\R)$ and showed that the expressions hold for an arbitrary element. Doing it this way will return the same results, however this will not always be true, and so care must be taken in future.
+\er 
+
+There are four more basic facts that allow us to obtain the spectrum in its entirety. We claim that, for the $H$-eigenvalue $\psi$, the following hold:
+\ben[label=(\roman*)]
+\item $H(a_+\psi) = (E+\hbar\omega)(a_+\psi)$, 
+\item $\|a_+\psi\| \geq \|\psi\| > 0$,
+\item $H(a_-\psi) = (E-\hbar\omega)(a_-\psi)$,
+\item $E\geq \frac{1}{2}\hbar\omega$.
+\een 
+
+\bq 
+\ben[label=(\roman*)]
+\item From the previous result we have
+\bi{rCl}
+H(a_+\psi) & = & a_+(H\psi) + [H,a_+]\psi \\
+& = & Ea_+\psi + \hbar\omega a_+\psi \\
+& = & (E+\hbar\omega)(a_+\psi)
+\ei 
+\item Given that $(a_+)^* = a_-$ and vice versa,\footnote{To show this you need to consider the definition of the adjoint and work from there, as you don't know that it will distribute across the addition in the definitions.}
+\bi{rCl}
+\|a_+\psi\|^2 & = & \braket{a_+\psi}{a_+\psi} \\
+& = & \braket{\psi}{(a_+)^*a_+\psi} \\
+& = & \braket{\psi}{a_-a_+\psi} \\
+& = & \braket{\psi}{a_+a_-\psi} + \braket{\psi}{[a_-,a_+]\psi} \\
+& = & \braket{a_-\psi}{a_-\psi} + \braket{\psi}{\id_{S(\R)}\psi} \\
+& \geq & \braket{\psi}{\psi} \\
+& = & \|\psi\|^2,
+\ei 
+where we used the fact that the inner product is non-negative definite in the second to last last step (i.e. the first term is non-negative). The result follows from taking the square root and imposing the condition that the norm is non-negative definite.
+\item This is done exactly analogously to (i). 
+\item Consider 
+\bi{rCl}
+E\braket{\psi}{\psi} & = & \braket{\psi}{E\psi} \\
+& = & \braket{\psi}{H\psi} \\
+& = & \hbar\omega \bigg(\braket{\psi}{a_+a_-\psi} + \frac{1}{2}\braket{\psi}{\id_{S(\R)}\psi} \bigg) \\
+& = & \hbar\omega\bigg( \braket{a_-\psi}{a_-\psi} + \frac{1}{2}\braket{\psi}{\id_{S(\R)}\psi} \bigg) \\ 
+& \geq & \frac{\hbar\omega}{2}\braket{\psi}{\psi}. 
+\ei 
+Then from the fact that $\psi$ is an eigenvector (and so cannot be the zero vector), the inner product is non-vanishing and we can divide through by it, giving the result.
+\een 
+\eq 
+
+We can, thus, draw some conclusions. For any $H$-eigenvector, $\psi$, with eigenvalue $E$ we have:
+\ben 
+\item From (i) and (ii) it follows that $a_+\psi$ is a eigenvector, as (i) tells us it obeys the eigenvalue equation and (ii) tells us its not the zero vector. Thus we know that the sequence 
+\bse 
+\{(a_+)^n\psi\}_{n\in\N_0}
+\ese 
+where the power indicates $n$-th order composition of operators, is a sequence of eigenvectors with correspoding eigenvalues 
+\bse 
+\{E + n\hbar\omega\}_{n\in\N_0}.
+\ese 
+\item (iii) and (iv) tell us that the sequence of eigenvectors
+\bse 
+\{(a_-)^n\psi\}_{n\in\N_0}
+\ese 
+\emph{must} terminate for some $n=N\in\N$. That is, we can not continue to keep lowering the eigenvalue $E$ forever, as (iv) says it bounded from below. Note this tells us that $a_-\psi$ is \emph{not} strictly a $H$-eigenvalue (just as $J_{\pm}$ weren't for $\Omega$ and $J_3$).
+
+In other words there is a non-vanishing $\psi_0\in S(\R)$ defined as 
+\bse 
+\psi_0 := (a_-)^N\psi
+\ese 
+such that $a_-\psi = 0_{S(\R)}$. It follows, then, from the definition of the Hamiltonian that 
+\bi{rCl}
+H\psi_0 & = & \hbar\omega a_+a_-\psi_0 + \frac{\hbar\omega}{2}\psi_0 \\
+& = & \frac{\hbar\omega}{2}\psi_0,
+\ei 
+and so it has the lowest possible eigenvalue, by (iv). 
+\item The entire sequence (as defined above) of eigenvalues is 
+\bse 
+\bigg\{ \hbar\omega \bigg(n+\frac{1}{2}\bigg)\bigg\}_{n\in\N_0}.
+\ese 
+Equivalently, we say the $n$-th eigenvector 
+\bse 
+\psi_n := (a_+)^n\psi 
+\ese 
+has the corresponding eigenvalue
+\bse 
+E_n := \hbar\omega \bigg(n+\frac{1}{2}\bigg)
+\ese 
+\item Considering again $a_-\psi_0=0_{S(\R)}$ along with the definition of $a_-$ we have 
+\bse 
+\bigg( \sqrt{\frac{m\omega}{2\hbar}}x + i \frac{1}{\sqrt{2\hbar m\omega}} (-i\hbar)\frac{d}{dx}\bigg)\psi_0(x) = 0,
+\ese 
+which is just a ODE. We can solve this using separation of variables; rearranging, we have
+\bse
+\psi_0'(x) = -\frac{m\omega}{\hbar} x\psi_0(x), 
+\ese 
+which using standard separation of variables technique gives 
+\bi{rCl}
+\ln|\psi_0(x)| & = & -\frac{m\omega}{2\hbar}x^2 + C \\
+\psi_0(x) & = & \pm e^C e^{-\frac{m\omega}{2\hbar}x^2} \\
+\psi_0(x) & = & A e^{-\frac{m\omega}{2\hbar}x^2},
+\ei 
+for complex constants $C$ and $A:=\pm e^C$. 
+
+Imposing a normalisation condition, we can then write the $n$-th eigenvector in terms of the $n$-th \emph{Hermit polynomial}, $H_n$, as 
+\bse 
+\psi_n \propto H_n\bigg(\sqrt{\frac{m\omega}{\hbar}}x\bigg) e^{-\frac{m\omega}{2\hbar}x^2}.
+\ese 
+\een
+
+\bc 
+From 4. we note that (up to the usual ambiguity of a complex multiple) there is only one eigenvector to each eigenvalue. That is we have the 1-dimensional eigenspace
+\bse 
+\text{Eig}_{H}(E_n) = \text{span}_{\C}(\psi_n),
+\ese 
+which tells us not only that $\psi_0$ exists in the first place, but that it is unique. 
+\ec 
+
+\br
+At the end of the last corollary we said that we confirmed the existence of $\psi_0$ in the first place. This might seem like a strange comment given the whole calculation, however it is actually rather important. To illustrate why Dr. Schuller mentions a doctoral proposal he once saw in which the student had derived some truly impressive formulae, only to have someone point out that towards the start of his calculation he had 0, and so everything that followed could have just been a repercussion of that (i.e. $0\cdot n = 0$ for any $n$ in your space). It is therefore to check that the things you are using actually exist, in this case $\psi_0$ doesn't vanish and so is an eigenvector. 
+\er 
+
+The Hermit polynomial expression is equally an important result as it tells us that $\psi_n\in S(\R)$ (as all polynomials are in $S(\R)$), which it needs to be if we are to act on it with our operators. Moreover, one can show that the set 
+\bse 
+\{\psi_n \, | \, n\in\N_0\}
+\ese 
+is an ON-eigenbasis for $L^2(\R)$, which leads us to the theorem promised at the start of the lecture.
+
+\bt 
+If a symmetric operator has as its eigenvectors an ON-basis, the operator is guaranteed to be essentially self adjoint. 
+\et 
+
+This theorem tells us that $H$ is essentially self adjoint, and the fact that we have an ON-eigenbasis for $L^2(\R)$ tells us that the continuous spectrum is empty. 

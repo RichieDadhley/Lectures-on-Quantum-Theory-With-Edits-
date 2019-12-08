@@ -1,0 +1,353 @@
+This lecture will begin our systematic approach to the study of the so-called \emph{Sch\"{o}dinger operator}:
+\bse 
+H : \cD_H \to L^2(\R^d),
+\ese 
+with 
+\bse 
+(H\psi)(x) := -\frac{\hbar^2}{2m}(\Laplace \psi)(x) + V(x)\psi(x),
+\ese 
+where $\Laplace := \partial_1^2+...+\partial_d^2$ is the \emph{Laplacian operator} and $V(x)$ is the potential. The \emph{Fourier operator} is an indispensable toll in conducting the study. 
+
+We will start by expanding on \Cref{lem:SchwartzSpaceFourierIsomorphism}. We will then use the fact that the Schwartz space is densely defined on $L^2(\R^d)$ along with the BLT theorem to provide a proscription for taking the Fourier transform on $L^2(\R^d)$.
+
+\subsection{The Fourier Operator on Schwartz Space}
+
+Recalling the definition of the Schwartz space, it is clear that the following facts hold: If $f\in S(\R^d)$ then 
+\ben[label=(\roman*)]
+\item $Q^kf\in S(\R^d)$ for all $k=1,...,d$, where $Q^k$ is the $k$-th position operator. 
+\item $P_kf\in S(\R^d)$ for all $k=1,...,d$, where $P_k$ is the $k$-th momentum operator. 
+\een 
+We shall use these facts in the following calculations. 
+
+\bd 
+The \emph{Fourier operator} on Schwartz space is the linear map $\fF:S(\R^d) \to S(\R^d)$ with 
+\bse
+(\fF f)(x) := \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dy e^{-ixy} f(y),
+\ese 
+where $xy := x_1y_1 + ... + x_dy_d$.
+\ed 
+
+\br 
+We are using the $1/(2\pi)^{d/2}$ convention in the definition above. As we shall see, all that is required is a `total of' $1/(2\pi)$ between the Fourier operator and it's inverse. This convention is often used as it makes comparing to the inverse easier. Other conventions (for example having $1/(2\pi)$ appear in the inverse and just have unit coefficient in the above) find use in certain cases (for example if you were only concerned with taking $\fF$).
+\er 
+
+\br 
+We shall also called the action of the Fourier operator on a function $f\in S(\R^d)$ the Fourier \emph{transform} of the function. 
+\er 
+
+We now wish to make some remarks on notation. 
+\ben[label=(\roman*)]
+\item Particularly in physics, it is often intuitive to think of $f$ as a function on `position space' (in the sense that its argument is a position space), while thinking of the Fourier transform $\fF f $ as a function on momentum space. Thus, one often relabels the variables as follows 
+\bse 
+(\fF f)(p) := \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dy e^{-ipx} f(x).
+\ese 
+
+While this does have its advantages at times (the famous example being the motivation behind the derivation of Heisenberg's uncertainty relation, a truly vital relation in quantum mechanics), it can also lead to misconceptions. For example, when thought of this way, one may think that you can not take the double Fourier transform $\fF(\fF f)$, as the first one gives a momentum space, which the second does not `act on'. However from the definition given, this is clearly nonsense --- of course you can take it twice as $\fF : S(\R^d) \to S(\R^d)$. 
+
+We shall, however, stick to this notation, but we should not be fooled by what we can take the Fourier transform of because of it.
+\item Recall that $(Q^kf)(x)= x^k f(x)$ which is just a real number. It is therefore totally meaningless to write something of the form 
+\bse 
+\fF \big(x^kf(x)\big).
+\ese 
+However having to define the operators each time and then taking the Fourier transform of their action on a function could end up quite lengthy, so instead we introduce the following notations 
+\bse 
+\reallywidehat{x^kf(x)} := \fF (Q^kf),
+\ese 
+and 
+\bse 
+\fF \big(x\mapsto x^kf(x)\big),
+\ese  
+and similarly for other operators. 
+
+The former of these two is how one usually sees the Fourier transform written, and it often just written as 
+\bse 
+\reallywidehat{g} := \fF g,
+\ese 
+where $g$ is the result of the action of the operator on $f$ (so here $g:= Q^kf$).
+\een 
+
+\bp 
+\label{prop:FourierDerivatives}
+Let $f\in S(\R^d)$ and $\gamma\in\N_0^d$. Then 
+\ben[label=(\roman*)]
+\item $\fF\big((-i)^{|\gamma|} \partial_{\gamma}f\big)(p) = p_{\gamma} \cdot \big(\fF f\big)(p)$. 
+\item $\fF\big(x\mapsto x^{\gamma}f\big)(p) = i^{|\gamma|}\big[\partial_{\gamma}\big(\fF f\big)\big](p)$.
+\een 
+\ep 
+
+\bq 
+We shall prove these both by induction. 
+\ben[label=(\roman*)]
+\item Let $\gamma=k$, and so $|\gamma|=1$. Then, using integration by parts, we have
+\bi{rCl}
+\fF \big(-i\partial_kf)(p) & := & \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dx e^{-ipx} (-i)\big(\partial_kf\big)(x) \\
+& = & -\frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dx (-ip_k)e^{-ipx} (-i)f(x) + \bigg[ \frac{-i}{(2\pi)^{d/2}} e^{-ipx} f(x) \bigg]_{\partial \R^d} \\
+& = & p_k \cdot \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dx e^{-ipx}f(x) \\
+& = & p_k \cdot \big(\fF f\big)(p),
+\ei 
+where we have used the fact that the elements of the Schwartz space are rapidly decaying to remove the boundary term. 
+
+Now assume it is true for $|\gamma| = n$. Then, if $\gamma'$ is the next step, from the fact that $\partial_k f\in S(\R^d)$ we have 
+\bi{rCl}
+\fF \big((-i)^{n+1} \partial_{\gamma_1}\partial_{\gamma_2}...\partial_{\gamma_{n+1}} f\big) (p) & = & \fF \big( (-i)^n \partial_{\gamma_1}\partial_{\gamma_2}...\partial_{\gamma_n}(-i\partial_{\gamma_{n+1}}f)\big)(p) \\
+& = & p_{\gamma_1}p_{\gamma_2}...p_{\gamma_n} \cdot  \fF\big(-i\partial_{\gamma_{n+1}}f\big)(p) \\
+& = & p_{\gamma_1}...p_{\gamma_n}p_{\gamma_{n+1}}\cdot \big(\fF f\big)(p) \\
+& =: & p_{\gamma'}\cdot \big(\fF f\big)(p) 
+\ei 
+\item Again let $\gamma=k$, then
+\bi{rCl}
+\fF\big(x\mapsto x^kf(x)\big)(p) & := & \frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dx e^{ipx}x^kf(x) \\
+& = & \frac{1}{(2\pi)^{d/2}} \int_{\R^d}d^d i\frac{\partial}{\partial p^k} \big(e^{-ipx}\big)f(x) \\
+& = & i\frac{\partial}{\partial p^k} \bigg[ \frac{1}{(2\pi)^{d/2}} \int_{\R^d}d^dx e^{-ipx}f(x) \bigg] \\
+& =: & i \bigg(\frac{\partial}{\partial p^k} \fF f\bigg)(p).
+\ei 
+Then using the notation $\partial_k$ gives the result here. In fact, we should have really written $\partial_k(p\mapsto e^{-ipx})$ on the second line --- i.e. you take the derivative before you evaluate at $x$. 
+Now assume its true for $|\gamma|=n$. Then,  if $\gamma'$ is the next step, we have 
+\bi{rCl}
+\fF\big(x\mapsto x^{\gamma_1}...x^{\gamma_{n+1}}f(x)\big)(p) & = & \fF\Big(x\mapsto x^{\gamma_1}...x^{\gamma_n}\big(y\mapsto y^{\gamma_{n+1}}f(y)\big)\Big)(p) \\
+& = & i^n \big[\partial_{\gamma_1}...\partial_{\gamma_n}\fF\big(y\mapsto y^{\gamma_{n+1}}f(y)\big)\big](p) \\
+& = & i^{n+1} \big[\partial_{\gamma'}(\fF f)\big](p)
+\ei 
+\een 
+\eq 
+
+\bp 
+Let $f\in S(\R^d)$. 
+\ben[label=(\roman*)]
+\item Let $a\in\R^d$, then
+\bse 
+\reallywidehat{f(x-a)}(p) = e^{iap} \cdot \reallywidehat{f(x)}(p).
+\ese 
+\item Let $\lambda\in\C$, then 
+\bse 
+\reallywidehat{f(\lambda x)}(p) = \frac{1}{\lambda^d}\reallywidehat{f(x)}\bigg(\frac{p}{\lambda}\bigg).
+\ese 
+\een 
+\ep 
+
+\bq 
+\ben[label=(\roman*)]
+\item Using the change of variables $y=x-a$, we have 
+\bi{rCl}
+\reallywidehat{f(x-a)}(p) & := & \frac{1}{(2\pi)^{d/2}}\int_{\R^d} d^dx e^{-ipx}f(x-a) \\
+& = & \frac{1}{(2\pi)^{d/2}}\int_{\R^d} d^dy e^{-ip(y+a))}f(y) \\
+& = & e^{-ipa} \cdot \frac{1}{(2\pi)^{d/2}}\int_{\R^d} d^dx e^{-ipx}f(x) \\
+& =: & e^{-ipa} \reallywidehat{f(x)}(p),
+\ei 
+where we relabelled $y\to x$ again. 
+\item Using the change of variables $y=\lambda x$
+\bi{rCl}
+\reallywidehat{f(\lambda x)}(p) & = & \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dx e^{-ipx}f(\lambda x) \\
+& = &  \frac{1}{(2\pi)^{d/2}} \int_{\R^d} \frac{1}{\lambda^d} d^dy e^{-ip\frac{y}{\lambda}} f(y) \\
+& = & \frac{1}{\lambda^d}\frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dx e^{-i\frac{p}{\lambda} x} f(x) \\
+& = & \frac{1}{\lambda^d}\reallywidehat{f(x)}\bigg(\frac{p}{\lambda}\bigg),
+\ei 
+where again we relabelled $y\to x$.
+\een 
+\eq 
+
+\subsection{Inverse of Fourier Operator}
+
+\br 
+This is often also called `the inverse Fourier transform'.
+\er 
+
+\bl 
+\label{lem:FourierExponentialSquare}
+Let $x\in\R^d$ and $z\in\C$ with $\Re(z)>0$. Then the following is true.
+\bse 
+\reallywidehat{\exp\Big(-\frac{z}{2}x^2\Big)}(p) = \frac{1}{z^{d/2}} \exp\Big(-\frac{1}{2z}p^2\Big).
+\ese 
+\el 
+
+\bq 
+We shall prove this for the case $d=1$. Let 
+\bse 
+G_z(x) := \exp\Big(-\frac{z}{2}x^2\Big).
+\ese 
+Then we have 
+\bi{rCl}
+\big(\partial G_z\big)(x) & = & -zx G_z(x) \\
+ip\cdot \big(\fF G_z\big)(p) & = & -iz \big[ \partial\big(\fF G_z\big) \big] (p),
+\ei 
+which is an ODE for $\fF G_z$. Solving by separation (as done when considering the quantum harmonic oscillator) we arrive at 
+\bse 
+\big(\fF G_z\big)(p) = A \exp\Big(-\frac{p^2}{2z}\Big).
+\ese 
+Plugging in $p=0$ and the definitions for the LHS gives 
+\bse 
+\frac{1}{\sqrt{2\pi}} \int_{\R} dx 1 \cdot  e^{-\frac{z}{2}x^2} = A.
+\ese 
+Then employing the fact that the integral above is holomorphic\footnote{See `Fourier Series, Fourier Transform and Their Application to Mathematical Physics' by V. Serov Capter 16} we we extend the standard integral result 
+\bse 
+\int_{\R} dx e^{-i\sigma x^2} = \sqrt{\frac{\pi}{\sigma}},
+\ese 
+for $\sigma\in\R$ to the case we are considering, giving
+\bse 
+A = \frac{1}{\sqrt{z}}.
+\ese 
+\eq 
+
+\bt 
+The Fourier operator $\fF : S(\R^d)\to S(\R^d)$ is invertable with inverse 
+\bse 
+\big(\fF^{-1}g\big)(x) = \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp e^{+ipx}g(p).
+\ese 
+\et 
+
+\bq 
+Need to show that $\big[\fF^{-1}\big(\fF f\big)\big](x) = f(x)$. In order to do so, we shall have to introduce a regulator
+\bse 
+\lim_{\varepsilon\to0} e^{-\frac{\varepsilon}{2}p^2} = 1
+\ese 
+into the integral. We shall then use the fact that $\big(\fF f\big)(p)$ will be dominant and the fact that we are using Lebesgue integrals to pull out the limit. We shall also use Fubini's theorem to move the order of the integrals.
+\bi{rCl}
+\big[\fF^{-1}\big(\fF f\big)\big](x) & := & \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp e^{ipx}\big(\fF f\big)(p) \\
+& = & \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp \lim_{\varepsilon\to0} e^{-\frac{\varepsilon}{2}p^2} e^{ipx}\big(\fF f\big)(p) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp  e^{-\frac{\varepsilon}{2}p^2} e^{ipx}\big(\fF f\big)(p) \\
+& := & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp  e^{-\frac{\varepsilon}{2}p^2} e^{ipx} \frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dy e^{-ipy} f(y) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dy \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp  e^{-\frac{\varepsilon}{2}p^2} e^{ipx}  e^{-ipy} f(y) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dy \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp  e^{-\frac{\varepsilon}{2}p^2} e^{-ip(y-x)} f(y) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dy \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp  e^{-\frac{\varepsilon}{2}p^2} e^{ipx}  e^{-ipy} f(y) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dz \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dp  e^{-\frac{\varepsilon}{2}p^2} e^{-ipz} f(z+x) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dz \bigg[\reallywidehat{\exp\Big(-\frac{\varepsilon}{2}p^2\Big)}(z)\bigg] f(z+x) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dz \frac{1}{\varepsilon^{d/2}} \exp \Big(-\frac{1}{2\varepsilon}z^2\Big) f(z+x) \\
+& = & \lim_{\varepsilon\to0}\frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dz' \varepsilon^{d/2} \frac{1}{\varepsilon^{d/2}} \exp \Big(-\frac{1}{2\varepsilon}\big(\varepsilon z'\big)^2\Big) f\big(\sqrt{\varepsilon}z'+x\big) \\
+& = & \frac{1}{(2\pi)^{d/2}}\int_{\R^d} d^dz' \exp\Big(-\frac{1}{2}\big(z'\big)^2\Big) \lim_{\varepsilon\to0} f\big(\sqrt{\varepsilon}z' +x\big) \\
+& = & \frac{1}{(2\pi)^{d/2}} (2\pi)^{d/2}f(x) \\
+& = & f(x),
+\ei 
+where we have used the substitutions $z=y+x$ and then $z = \sqrt{\varepsilon}z'$ along with the standard integral result used in the previous lemma.
+\eq 
+
+\subsection{Extension of $\fF$ to $L^2(\R^d)$}
+
+We already know that $\fF$ is densely defined on $L^2(\R^2)$, so if we can show it is bounded the BLT theorem will tell us there is a unique, bounded extension of $\fF$ on $L^2(\R^d)$. 
+
+\bt[Parseval's Theorem]
+Let $f\in S(\R^d)$, then
+\bse 
+\int_{\R^d}d^dp \big| \big(\fF f\big)(p)\big|^2 = \int_{\R^d} d^dx |f(x)|^2.
+\ese 
+\et 
+
+\bq 
+The proof follows by direct calculation. 
+\bi{rCl}
+\int_{\R^d}d^dp \big| \big(\fF f\big)(p)\big|^2 & = & \int_{\R^d}d^dp \bigg| \int_{\R^d}d^dxe^{-ipx}f(x) \bigg|^2 \\
+& = & \int_{\R^d}d^dp \int_{\R^d}d^dx\Big|e^{-ipx} f(x) \Big|^2 \\
+& = & \int_{\R^s}d^dp \int_{\R^d}d^dx |f(x)|^2 \\
+& = & \int_{\R^d} d^dx |f(x)|^2,
+\ei 
+where we used the fact that the integral is over a real domain. 
+\eq 
+
+It follows from Parseval's theorem, then, that 
+\bi{rCl}
+\|\fF\| & := & \sup_{f\in S(\R^d)} \frac{\|\fF f\|^2_{S(\R^d)}}{\|f\|^2_{S(\R^d)}} \\
+& = & \sup_{f\in S(\R^d)} \frac{ \sqrt{\int_{\R^d}d^dp\big|\big(\fF f\big)(p)\big|^2} }{\sqrt{\int_{\R^d} d^dx |f(x)|^2}} \\
+& = & \sup_{f\in S(\R^d)} \sqrt{\frac{\int_{\R^d}d^dp \big| \big(\fF f\big)(p)\big|^2}{\int_{\R^d} d^dx |f(x)|^2}} \\
+& = & 1,
+\ei 
+so we have a unique extension
+\bse 
+\fF : L^2(\R^2) \to L^2(\R^2).
+\ese 
+
+In practice if we wanted to take the Fourier transform of a function $f\in L^2(\R^d)\setminus S(\R^d)$ then we do it via the following prescription: Let $\{f_n\}_{n\in \N}\ss S(\R^d)$ with $\lim_{n\to\infty}f_n = f$, then 
+\bse 
+\fF f = \fF \Big(\lim_{n\to\infty} f_n\Big) = \lim_{n\to\infty} \big(\fF f_n\big),
+\ese 
+where we have used the fact that $\fF$ is bounded to remove the limit. 
+
+\subsection{Convolutions}
+
+\bd 
+The \emph{convolution} of two functions $f,g\in L^1(\R^d)$, written $f * g$, is the $L^1(\R^d)$ function defined pointwise by 
+\bse 
+(f * g)(x) := \int_{\R^d}d^dyf(x-y)g(y).
+\ese 
+\ed 
+
+\bl 
+The convolution of two functions is symmetric, i.e. 
+\bse 
+f*g = g*f.
+\ese 
+\el 
+
+\bq 
+The result comes from simple change of variables along with the commutativity of the complex multiplication,
+\bi{rCl}
+(f * g)(x) & := & \int_{\R^d}d^dy \, f(x-y)g(y) \\
+& = & (-1)^{2d} \int_{\R^d} d^dz \, f(z) g(x-z) \\
+& = & \int_{\R^d} d^dz \, g(x-z) f(z) \\
+& = & \int_{\R^d} d^dy \, g(x-y) f(y) \\ 
+& =: & (g*f)(x),
+\ei 
+where the $(-1)^{2d}$ term comes from the fact that $dy=-dz$ along with the fact that the integral limits swap. Since $x\in\R^d$ was arbitrary, we have the result.
+\eq 
+
+\bl 
+The convolution is associative, i.e. 
+\bse 
+(f*g)*h = f*(g*h).
+\ese 
+\el 
+
+\bq 
+By direct calculation using Fubini's Theorem, and the previous lemma:
+\bi{rCl}
+\big((f*g)*h\big)(x) & = & \big( h*(f*g)\big)(x) \\
+& := & \int_{\R^d} d^dy \, h(x-y) (f*g)(x) \\
+& = & \int_{\R^d} d^dy \, h(x-y) (g*f)(x) \\
+& := & \int_{\R^s}d^dy \, h(x-y) \int_{\R^d} d^dz \, g(z-x) f(z) \\
+& = & \int_{\R^d}d^du \int_{\R^d}d^dz \, h(u) g(z-u-y) f(z) \\
+& = & \int_{\R^d}d^dz \bigg( \int_{\R^d}d^du \,  g(z-y-u)h(u)\bigg) f(z) \\
+& = & \int_{\R^d}d^dz \, \big(g*h\big)(z-y) f(z) \\
+& = & \int_{\R^d}d^dx \, \big(g*h\big)(x-y) f(x) \\
+& = & \big((g*h)*f\big)(x) \\
+& = & \big( f*(g*h)\big)(x),
+\ei 
+which holds for all $x\in\R^d$, giving the result.
+\eq 
+
+\bl 
+The convolution is distributive across addition, i.e. 
+\bse 
+f*(g+h) = f*g + f*h,
+\ese 
+where the addition is defined pointwise. 
+\el 
+
+\bq 
+This follows from the linearity of the Lebesgue integral:
+\bi{rCl}
+\big(f*(g+h)\big)(x) & := & \int_{\R^d}d^dy \, f(x-y) (g+h)(x) \\
+& = & \int_{\R^d} \, f(x-y)g(x) + \int_{\R^d} \, f(x-y)h(x) \\
+& = & (f*g)(x) + (f*h)(x),
+\ei 
+which holds for all $x\in\R^d$, giving the result. 
+\eq 
+
+
+\bt
+\label{thrm:FourierConvolution}
+The Fourier transform of the convolution of two functions is proportional to the product of their Fourier transforms, explicitly 
+\bse 
+\fF(f*g) = (2\pi)^{d/2} \fF(f)\cdot \fF(g).
+\ese 
+\et 
+
+\bq 
+By direct calculation, 
+\bi{rCl}
+\fF(f*g)(p) & := & \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dx \,  e^{-ipx} (f*g)(x) \\
+& := & \frac{1}{(2\pi)^{d/2}} \int_{\R^d} d^dx\, \bigg( e^{-ipx} \int_{\R^d}d^dy \, f(x-y)g(x) \bigg) \\
+& = & \frac{1}{(2\pi)^{d/2}} \int_{\R^d}d^dz \bigg( e^{-ip(z+y)} \int_{\R^d} d^dy \, f(z) g(x) \bigg) \\
+& = & \frac{1}{(2\pi)^{d/2}}\int_{\R^d}d^dz\int_{\R^d}d^dy \, e^{-ipz}f(z) e^{-ipy}g(y) \\
+& = & (2\pi)^{d/2} \bigg(\frac{1}{(2\pi)^{2/pi}}\int_{\R^d}d^dz \, e^{ipz}f(z)\bigg) \cdot \bigg(\frac{1}{(2\pi)^{2/pi}}\int_{\R^d}d^dy \,  e^{ipy}g(y)\bigg) \\
+& = & (2\pi)^{2/d} \big((\fF f)(p)\big)\cdot \big((\fF g)(p)\big),
+\ei 
+where we have used the fact that we can consider the convolution integration variable (the $y$) as a constant when relabelling the Fourier transform variable, and used the fact that the Fourier transform of a function is finite to make the integral of an integral into a product of integrals. Finally since this is true for all $p\in\R^d$ the result follows. 
+\eq 

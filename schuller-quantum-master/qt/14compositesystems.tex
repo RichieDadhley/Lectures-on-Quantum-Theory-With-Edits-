@@ -1,0 +1,503 @@
+Recall Axiom 1, which says that to every quantum system there is an underlying Hilbert space. The question we now want to ask is: Let $\cH_1$ be the Hilbert space associated to one system and $\cH_2$ be the Hilbert space associated to another. What is the underlying Hilbert space associated to the composite system? 
+
+To clarify what we mean, imagine having a proton and an electron. We first look at the proton by itself and call this system one. We then look at the electron separately and call that system two. We now want to look at both of them together, but we wish to use the fact that we have already studied them separately to simplify the problem. It may seem `natural' to model the composite $\cH$ as the so called \emph{direct sum}, which as a set is\footnote{This definition holds as we are only taking the direct product of two spaces, and so the index set is finite. See \href{https://en.wikipedia.org/wiki/Direct_sum}{wiki} for details on this.}
+\bse 
+\cH_1\oplus \cH_2 := \{ (\psi,\varphi) \, | \, \psi\in\cH_1, \varphi\in\cH_2 \},
+\ese 
+and where the linearity is inherited from $\cH_1$ and $\cH_2$, namely  
+\bse 
+(a\psi_1+\psi_2,b\varphi_1+\varphi_2) = ab(\psi_1,\varphi_1) + a(\psi_1,\varphi_2) + b(\psi_2,\varphi_1) + (\psi_2,\varphi_2).
+\ese 
+This is what we do in classical systems and it tells us that if we know everything about the states\footnote{Recall that the elements of the Hilbert space are \emph{not} the states, but are associated to them. We shall return to this at the end of the lecture.} of our two systems, then we also know everything about the states of the composite system. 
+
+However, as with all things quantum, things are more complicated, and the above is not the case. The main problem comes from the fact that not all linear combinations of elements of the form $(\psi,\varphi)$ can also be written in that form. 
+
+\be 
+Let $\psi_1,\psi_2\in\cH_1$, $\varphi_1,\varphi_2\in\cH_2$ and $a,b\in\C$. Then, assuming the linearity as above, we have 
+\bi{rCl}
+a(\psi_1,\varphi_1)+b(\psi_2,\varphi_2) & = & (a\psi_1,\varphi_1)+(\psi_2,b\varphi_2) \\
+& = & (a\psi_1 + \psi_2,\varphi_1+b\varphi_2) \\
+& = & a(\psi_1,\varphi_1)+b(\psi_2,\varphi_2)+ab(\psi_1,\varphi_2) + (\psi_2,\varphi_1),
+\ei 
+a clear problem.
+\ee
+Note this example actually tells us that we $\cH_1\oplus\cH_2$ is not closed under the linearity, and so would not be a vector space. We could just restrict ourselves to elements that do obey these rules, however, as we shall see when considering entanglement, we require elements of this form in our underlying Hilbert space.  
+
+This calls for a slight refinement of axiom one. We add the addendum\footnote{We shall define what these new terms are in the next section.}: 
+
+\begin{tcolorbox}[colframe=blue!10!black,before skip=10pt,after skip=10pt]
+If a quantum system is composed of two (and hence, by induction, any finite number) of `sub'systems, then its underlying Hilbert space is the \emph{tensor product space} $\cH_1\otimes\cH_2$, equipped with a inner product.
+\end{tcolorbox}
+
+\be 
+\Cref{rem:ElectronCompositeHilbert} is an example of such a composite system.
+\ee 
+
+\subsection{Tensor Product of Hilbert Spaces}
+
+In order to give a nice definition for the tensor product of two vector spaces, we first need to introduce the so called \emph{free vector space}.
+
+\bd 
+Let $V$ be a $\F$-vector space and let $B\se V$ be a generating subset of $V$ (i.e. any element of $V$ can be obtained via finite linear combinations of elements of $B$). The the \emph{free vector space} is 
+\bse 
+F(B) := \text{span}_{\F}(B),
+\ese 
+i.e. the set of all linear combinations of elements of $B$.
+\ed 
+
+\bl 
+Every vector space is a free vector space with $B$ being a Hamel basis.
+\el 
+
+\br 
+\label{rem:F(B)notV}
+Note it need not be true that $F(B)=V$, as it might be the case that the same element in $V$ is reached via two different linear combinations of elements of $B$. In fact if $F(B)=V$, then $B$ is just a Hamel basis.
+\er 
+
+The free vector space for vector spaces might seem almost redundant, given that every vector space has a basis. However if your vector space is countably infinite then such a basis might be incredibly difficult to construct. However you can simply take the entire set for $B$ and construct the free vector space $F(V)$, which will be a huge set, mind. Note, then, that any linear combination of elements in this set is automatically still in the set, and so it is indeed a vector space.
+
+\bd 
+Let $V$ and $W$ be two $\F$-vector spaces, and let $A\se V$ and $B\se W$ be generating subsets. Then we define their tensor product as the vector space with set 
+\bse 
+V\otimes W := F(A\times B)/_{\sim},
+\ese 
+where $\times$ is the Cartesian prodcut and $\sim$ is an equivalence relation such that: if $a,a_1,a_2\in A$, $b,b_1,b_2\in B$ and $f\in\F$ then 
+\ben[label=(\roman*)]
+\item $(a,b)\sim(a,b)$, 
+\item $(a_1,b_1) + (a_1,b_2) \sim (a_1,b_1+b_2)$ and $(a_1,b_1) + (a_2,b_1) \sim (a_1+a_2,b_1)$, and continued by induction,
+\item $f(a,b) \sim (fa,b)$ and $f(a,b)\sim(a,fb)$. 
+\item Combinations of (ii) and (iii), e.g. $(a_1,b_1)+f(a_1,b_2) \sim (a_1,b_1+fb_2)$. 
+\een 
+\ed 
+
+\br 
+Note the equivalence relation looks a lot like a linearity condition on $V\otimes W$, however on closer inspection it is not quite. The linearity condition that make $V\otimes W$ into a vector space is simply 
+\bse 
+f(a_1,b_1) + (a_2,b_2) \in V\otimes W.
+\ese 
+This, in itself, does not need to satisfy the equivalence relation. However, if we did not include it we could end up with a huge redundancy in elements, as a repercussion of \Cref{rem:F(B)notV}. This equivalence relation makes the corresponding set of equivalence classes a vector space in the way we normally think of them (there is no repeated elements).
+\er 
+
+This is exactly the type of structure we need to overcome the problem highlighted before (that not all linear combinations can be expressed as a single term), as now we only require that linear combinations of linear combinations are linear combinations, which they obviously are.
+
+\bp 
+\label{prp:EquivAdditionH12}
+Let $\cH_1$ and $\cH_2$ be our two vector spaces. We can define the map 
+\bi{rrCl}
++_{\cH_1\otimes\cH_2} \cl & (\cH_1\otimes\cH_2)\times (\cH_1\otimes\cH_2) & \to & (\cH_1\otimes\cH_2) \\
+& \big([(\psi,\varphi_1)],[(\psi,\varphi_2)]\big) & \mapsto & [(\psi,\varphi_1)]+_{\cH_1\otimes\cH_2} [(\psi,\varphi_2)] := [(\psi,\varphi_1)+(\psi,\varphi_2)],
+\ei 
+where the additions inside the brackets are w.r.t. $\cH_1$ and $\cH_2$. 
+\ep 
+
+\bq 
+We need to show this is well defined. We shall write $+_{12}$ now in order to lighten notation. Consider it case by case. 
+\ben[label=(\roman*)]
+\item Assume $(\widetilde{\psi},\widetilde{\varphi_1})= (\psi,\varphi_1)$. 
+\ben 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})= (\psi,\varphi_2)$, then it follows trivially that 
+\bse 
+[(\widetilde{\psi},\widetilde{\varphi_1})+(\widetilde{\psi},\widetilde{\varphi_2})] = [(\psi,\varphi_1)+(\psi,\varphi_2)],
+\ese 
+and so 
+\bse 
+[(\widetilde{\psi},\widetilde{\varphi_1})] +_{12} [(\widetilde{\psi},\widetilde{\varphi_2})] = [(\psi,\varphi_1)] +_{12} [(\psi,\varphi_2)].
+\ese 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})= (\psi,\varphi_2^1)+(\psi,\varphi_2^2)$, where $\varphi_2=\varphi_2^1+\varphi_2^2$, we have 
+\bi{rCl}
+[(\widetilde{\psi},\widetilde{\varphi_1})+(\widetilde{\psi},\widetilde{\varphi_2})] & = & [(\psi,\varphi_1)+(\psi,\varphi_2^1)+(\psi,\varphi_2^2)] \\
+& = & [(\psi,\varphi_1+\varphi_2^1+\varphi_2^2)] \\
+& = & [(\psi,\varphi_1+\varphi_2)] \\
+& = & [(\psi,\varphi_1)+(\psi,\varphi_2)],
+\ei 
+and so 
+\bse 
+[(\widetilde{\psi},\widetilde{\varphi_1})] +_{12} [(\widetilde{\psi},\widetilde{\varphi_2})] = [(\psi,\varphi_1)] +_{12} [(\psi,\varphi_2)].
+\ese 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2}) = f(\psi,\varphi_2^3)$, where $\varphi_2=f\varphi_2^3$, then
+\bi{rCl}
+[(\widetilde{\psi},\widetilde{\varphi_1})+(\widetilde{\psi},\widetilde{\varphi_2})] & = & [(\psi,\varphi_1)+f(\psi,\varphi_2^3)] \\
+& = & [(\psi,\varphi_1)+(\psi,f\varphi_2^3)] \\
+& = & [(\psi,\varphi_1)+(\psi,\varphi_2)],
+\ei 
+and so 
+\bse 
+[(\widetilde{\psi},\widetilde{\varphi_1})] +_{12} [(\widetilde{\psi},\widetilde{\varphi_2})] = [(\psi,\varphi_1)] +_{12} [(\psi,\varphi_2)].
+\ese 
+\een 
+\item Assume $(\widetilde{\psi},\widetilde{\varphi_1})=(\psi,\varphi_1^1) +(\psi,\varphi_1^2)$ where $\varphi_1=\varphi_1^1+\varphi_1^2$.
+\ben 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})=(\psi,\varphi_2)$ then we have essentially the same as (i)(b), so we wont re-write it here. 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})= (\psi,\varphi_2^1)+(\psi,\varphi_2^2)$, where $\varphi_2=\varphi_2^1+\varphi_2^2$, we have
+\bi{rCl}
+[(\widetilde{\psi},\widetilde{\varphi_1})+(\widetilde{\psi},\widetilde{\varphi_2})] & = & [(\psi,\varphi_1^1)+(\psi,\varphi_1^2)+(\psi,\varphi_2^1)+(\psi,\varphi_2^2)] \\
+& = & [(\psi,\varphi_1^1+\varphi_1^2+\varphi_2^1+\varphi_2^2)] \\
+& = & [(\psi,\varphi_1+\varphi_2)] \\
+& = & [(\psi,\varphi_1)+(\psi+\varphi_2)],
+\ei 
+and so 
+\bse 
+[(\widetilde{\psi},\widetilde{\varphi_1})] +_{12} [(\widetilde{\psi},\widetilde{\varphi_2})] = [(\psi,\varphi_1)] +_{12} [(\psi,\varphi_2)].
+\ese 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})=f(\psi,\varphi_2^3)$ where $\varphi_2=f\varphi_2^3$, then we have 
+\bi{rCl}
+[(\widetilde{\psi},\widetilde{\varphi_1})+(\widetilde{\psi},\widetilde{\varphi_2})] & = & [(\psi,\varphi_1^1)+(\psi,\varphi_1^2)+f(\psi,\varphi_2^3)] \\
+& = & [(\psi,\varphi_1^1+\varphi_1^2+f\varphi_2^3)] \\
+& = & [(\psi,\varphi_1+\varphi_2)] \\
+& = & [(\psi,\varphi_1)+(\psi,\varphi_2)]
+\ei 
+and so 
+\bse 
+[(\widetilde{\psi},\widetilde{\varphi_1})] +_{12} [(\widetilde{\psi},\widetilde{\varphi_2})] = [(\psi,\varphi_1)] +_{12} [(\psi,\varphi_2)].
+\ese 
+\een 
+\item Assume $(\widetilde{\psi},\widetilde{\psi_1})\sim g(\psi,\varphi_1^3)$, where $\varphi_1=g\varphi_1^3$. 
+\ben 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})=(\psi,\varphi_2)$, then we have basically same as (i)(c) and so we wont write it again. 
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})=(\psi,\varphi_2^1)+(\psi,\varphi_2^2)$, where $\varphi_2=\varphi_2^1+\varphi_2^2$, then we are basically the same as (ii)(c) and so we wont write it again.
+\item If $(\widetilde{\psi},\widetilde{\varphi_2})=f(\psi,\varphi_2^3)$, where $\varphi_2=f\varphi_2^3$ then 
+\bi{rCl}
+[(\widetilde{\psi},\widetilde{\varphi_1})+(\widetilde{\psi},\widetilde{\varphi_2})] & = & [g(\psi,\varphi_1^3)+f(\psi,\varphi_2^3)] \\
+& = & [(\psi,g\varphi_1^3+f\varphi_2^3)] \\
+& = & [(\psi,\varphi_1+\varphi_2] \\
+& = & [(\psi,\varphi_1)+(\psi,\varphi_2)]
+\ei 
+and so 
+\bse 
+[(\widetilde{\psi},\widetilde{\varphi_1})] +_{12} [(\widetilde{\psi},\widetilde{\varphi_2})] = [(\psi,\varphi_1)] +_{12} [(\psi,\varphi_2)].
+\ese 
+\een 
+\een 
+\eq 
+
+\br 
+We can do exactly the same thing but for a map that has the first element different and the second element the same. 
+\er 
+
+\bd 
+Let $\cH_1$ and $\cH_2$ be complex Hilbert spaces with sesqui-linear inner products $\braket{\cdot}{\cdot}_{\cH_1}$ and $\braket{\cdot}{\cdot}_{\cH_2}$, respectively. Then the \emph{composite Hilbert space} is the Hilbert space with set 
+\bse 
+\cH_1\otimes \cH_2 := \overline{F(\cH_1\times\cH_2)/_{\sim}},
+\ese 
+where the overline indicates the topological closure, and with sesqui-linear inner product: for $\psi_1,\psi_2\in\cH_1$ and $\varphi_1,\varphi_2\in\cH_2$,
+\bse 
+\braket{[(\psi_1,\varphi_1)]}{[(\psi_2,\varphi_2)]}_{\cH_1\otimes\cH_2} := \braket{\psi_1}{\psi_2}_{\cH_1} \cdot  \braket{\varphi_1}{\varphi_2}_{\cH_2},
+\ese 
+extended by linearity, with respect to which the closure is taken (i.e. the topology is derived from here).
+\ed 
+
+\br 
+Note, we need to take the topological closure as the free vector space only considers \emph{finite} linear combinations, but our Hilbert spaces could be infinite dimensional.
+\er 
+
+\bq 
+(that we have a sesqui-linear inner product). 
+\ben[label=(\roman*)]
+\item Conjugate symmetry. 
+\bi{rCl}
+\overline{\braket{[(\psi_1,\varphi_1)]}{[(\psi_2,\varphi_2)]}_{\cH_1\otimes\cH_2}} & = & \overline{\braket{\psi_1}{\psi_2}_{\cH_1}} \cdot \overline{\braket{\varphi_1}{\varphi_2}_{\cH_2}} \\
+& = & \braket{\psi_2}{\psi_1}_{\cH_1}\cdot \braket{\varphi_2}{\varphi_1}_{\cH_2} \\
+& =: & \braket{[(\psi_2,\varphi_2)]}{[(\psi_1,\varphi_1)]}_{\cH_1\otimes\cH_2}
+\ei 
+\item Linearity in second argument. The extension by linearity means
+\bi{rCl}
+\braket{[(\psi_1,\varphi_1)]}{\sum_iz_i[(\psi_i,\varphi_i)}_{\cH_1\otimes\cH_2} & := & \sum_iz_i \braket{\psi_1}{\psi_i}_{\cH_1} \cdot  \braket{\varphi_1}{\varphi_i}_{\cH_2} \\
+& = & \sum_iz_i\braket{[(\psi_1,\varphi_1)]}{[(\psi_i,\varphi_i)]}_{\cH_1\otimes\cH_2},
+\ei 
+for $z_i\in\C$.
+\item Positive-definiteness. As $\braket{\cdot}{\cdot}_{\cH_1},\braket{\cdot}{\cdot}_{\cH_1}\geq 0$ it follows that\footnote{We shall use $`-'$ for empty slots on the composite space.} $\braket{-}{-}_{\cH_1\otimes\cH_2}\geq 0$. Then from 
+\bse 
+(0_{\cH_1},\varphi) = (0\cdot \psi, \varphi) \sim  0(\psi,\varphi) \sim  (\psi,0\cdot\varphi) = (\psi,0_{\cH_2}),
+\ese 
+we have 
+\bse 
+[(0_{\cH_1},\varphi)] = [(\psi,0_{\cH_2})] =: 0_{\cH_1\otimes\cH_2}.
+\ese 
+Finally, from
+\bi{rCl}
+0 & = & \braket{[(\psi,\varphi)]}{[(\psi,\varphi)]}_{\cH_1\otimes\cH_2} \\
+& := & \braket{\psi}{\psi}_{\cH_1}\cdot\braket{\varphi}{\varphi}_{\cH_2},
+\ei 
+which implies either $\psi=0_{\cH_1}$ and/or $\varphi=0_{\cH_2}$, and so $[\psi,\varphi]=0_{\cH_1\otimes\cH_2}$.
+\een 
+\eq
+
+
+We also need to check that the sesqui-linear inner product is well defined. 
+
+\bq 
+The proof follows a similar method to the proof of \Cref{prp:EquivAdditionH12}. We shall just show the first two results here in order to save space. 
+\ben[label=(\roman*)]
+\item Assume $(\widetilde{\psi_1},\widetilde{\varphi_1}) = (\psi_1,\varphi_1)$. 
+\ben
+\item If $(\widetilde{\psi_2},\widetilde{\varphi_2}) = (\psi_2,\varphi_2)$. The inner product result follows trivially. 
+\item $(\widetilde{\psi_2},\widetilde{\varphi_2}) = (\psi_2,\varphi_2^3)+(\psi_2,\varphi_2^4)$, where $\varphi_2=\varphi_3+\varphi_4$, 
+\bi{rCl}
+\braket{[(\widetilde{\psi_1},\widetilde{\varphi_1})]}{[\widetilde{\psi_2},\widetilde{\varphi_2})]}_{12} & = &  \braket{[(\psi_1,\varphi_1)]}{[(\psi_2,\varphi_2^3)+(\psi_2,\varphi_2^4)]}_{12} \\
+& = & \braket{[(\psi_1,\varphi_1)]}{[(\psi_2,\varphi_2^3)]+_{12}[(\psi_2,\varphi_2^4)]}_{12} \\
+& = & \braket{[(\psi_1,\varphi_1)]}{[(\psi_2,\varphi_2^3)]}_{12} + \braket{[(\psi_1,\varphi_1)]}{[(\psi_2,\varphi_2^4)]}_{12} \\
+& := & \braket{\psi_1}{\psi_2}_1 \braket{\varphi_1}{\varphi_2^3}_2 + \braket{\psi_1}{\psi_2}_1 \braket{\varphi_1}{\varphi_2^4}_2 \\
+& = & \braket{\psi_1}{\psi_2}_1 \cdot \Big( \braket{\varphi_1}{\varphi_2^3}_2 + \braket{\varphi_1}{\varphi_2^4}_2 \Big) \\
+& = & \braket{\psi_1}{\psi_2}_1 \braket{\varphi_1}{\varphi_2^3+\varphi_2^4}_2 \\
+& = & \braket{\psi_1}{\psi_2}_1 \braket{\varphi_1}{\varphi_2}_2 \\
+& =: & \braket{[(\psi_1,\varphi_1)]}{[(\psi_2,\varphi_2)]}_{12}.
+\ei 
+\een 
+\een 
+\eq 
+
+We introduce the new notation 
+\bse 
+\psi\boxtimes\varphi := [(\psi,\varphi)].
+\ese 
+Here we have used a $\boxtimes$ for the tensor product of two vectors. We have done this in order to highlight the fact that it is \emph{not} the same thing as $\otimes$, which is the tensor product between vector spaces. We will, however, end up using $\otimes$ for \emph{all} tensor products later, as this is the common notation. It is important to remember that they are distinctly different objects, and, if in doubt, we should go back to the definitions to clarify the circumstance. 
+
+In this new notation we can rewrite the definition for the sesqui-linear inner product simply as 
+\bse 
+\braket{\psi\boxtimes\varphi}{\widetilde{\psi}\boxtimes\widetilde{\varphi}}_{\cH_1\times\cH_2} := \braket{\psi}{\widetilde{\psi}}_{\cH_1}\braket{\varphi}{\widetilde{\varphi}}_{\cH_2},
+\ese 
+extended by linearity. 
+
+\be 
+This example acts as a further warning that its important that we consider the space $F(\cH_1\times\cH_2)$ and not just $\cH_1\times\cH_2$. 
+
+Let $\cH_1=\cH_2=\C^2$. Then we can express the elements at 2x1 matrices, in which case we can consider $\boxtimes$ to be the outer product. Note then that 
+\bse 
+\begin{pmatrix}
+1 \\
+0 
+\end{pmatrix} \boxtimes \begin{pmatrix}
+0 \\
+1 
+\end{pmatrix} - \begin{pmatrix}
+0 \\
+1
+\end{pmatrix} \boxtimes \begin{pmatrix}
+1 \\ 
+0 
+\end{pmatrix} = \begin{pmatrix}
+0 & 1 \\
+0 & 0 
+\end{pmatrix} - \begin{pmatrix}
+0 & 0 \\
+1 & 0 
+\end{pmatrix} = \begin{pmatrix}
+0 & 1 \\
+-1 & 0 
+\end{pmatrix}
+\ese 
+is in $\cH_1\otimes\cH_2$, but it \emph{cannot} be written as $\psi\boxtimes\varphi$ for some $\psi\in\cH_1$ and $\varphi\in\cH_2$.
+\ee 
+
+\bt 
+Let $\{e_i\}_{i=1,...,\dim(\cH_1)}$ and $\{f_i\}_{i=1,...,\dim(\cH_2)}$ be a Schauder (ON)-bases for $\cH_1$ and $\cH_2$ respectively. Then we can construct a Schauder (ON)-basis for $\cH_1\otimes\cH_2$ as 
+\bse 
+\{e_i\boxtimes f_j\}_{\substack{i=1,...,\dim(\cH_2) \\ j=1,...,\dim(\cH_2)}}
+\ese 
+\et 
+
+\bc 
+We can rewrite 
+\bse 
+\cH_1\otimes\cH_2 := \bigg\{\sum_{i=1}^{\dim(\cH_1)} \sum_{j=1}^{\dim(\cH_2)} a_{ij} e_i\boxtimes f_j \,  \Big| \, a_{ij}\in\C, \sum_{i,j} |a_{ij}|^2 <\infty \bigg\},
+\ese 
+from which it also follows that 
+\bse 
+\dim(\cH_1\otimes\cH_2) = \dim(\cH_1)\cdot\dim(\cH_2).
+\ese 
+\ec 
+
+\subsection{Practical Rules for Tensor Products of Vectors} 
+
+This short section just highlights a couple rules obeyed by $\boxtimes$. 
+\ben[label=(\roman*)]
+\item Let $\psi_1,\psi_2\in\cH_1$, $\varphi_1,\varphi_2\in\cH_2$ and $\alpha,\beta\in\C$. Then the following holds 
+\bse 
+(\psi_1+\alpha\psi_2)\boxtimes(\varphi_1+\beta\varphi_2) = \psi_1\boxtimes\varphi_1 + \alpha\psi_2\boxtimes\varphi_1 + \beta\psi_1\boxtimes\varphi_2 + \alpha\beta\psi_2\varphi_2.
+\ese 
+\item Given that $\{e_i\boxtimes f_j\}$ is a basis, we have: 
+\bse 
+\forall \Psi\in\cH_1\otimes\cH_2 \quad  \exists a_{ij}\in\C \, : \, \Psi := \sum_{i,j}a_{ij} e_i\boxtimes f_j.
+\ese 
+\een 
+
+\br 
+\label{rmk:TensorOrderMatters}
+Note, obviously, that the order matters when taking a tensor product. In other words, in general 
+\bse 
+\psi\boxtimes\varphi \neq \varphi\boxtimes\psi. 
+\ese 
+Note, its not even a case of `choosing the right $\psi$ and $\varphi$', as the LHS is an element of $\cH_1\otimes\cH_2$ whereas the RHS is an element of $\cH_2\otimes \cH_1$. So, unless the two spaces are the same, they could never be equal. 
+\er 
+
+\subsection{Tensor Product Between Operators}
+
+\bd 
+Let $A:\cH_1\to\cH_1$ and $B:\cH_2\to\cH_2$ be linear maps. Then we define their tensor product as 
+\bi{rrCl}
+A\widehat{\otimes} B \, : \, & \cH_1\otimes\cH_1 & \to & \cH_1\otimes\cH_2 \\
+& \psi\boxtimes\varphi & \mapsto & (A\widehat{\otimes} B)(\psi\boxtimes\varphi) := (A\psi)\boxtimes(B\varphi).
+\ei 
+\ed 
+
+\bt 
+If $A:\cH_1\to\cH_1$ and $B:\cH_2\to\cH_2$ are self adjoint then their tensor product $A\widehat{\otimes} B$ is also self adjoint on $\cH_1\otimes\cH_2$.
+\et 
+
+\bq 
+We have $A=A^*$ and $B=B^*$, i.e. that their domains coincide and $A\psi=A^*\psi$ for all $\psi\in\cD_A$ and similarly for $B$ and $B^*$. Then we have 
+\bi{rrCl}
+A\widehat{\otimes} B \, : \, & \cD_A\otimes\cD_B & \to & \cH_1\otimes\cH_2 \\
+& \psi\boxtimes\varphi & \mapsto &  (A\psi)\boxtimes(B\varphi),
+\ei 
+and 
+\bi{rrCl}
+A^*\widehat{\otimes} B^* \, : \, & \cD_A\otimes\cD_B & \to & \cH_1\otimes\cH_2 \\
+& \psi\boxtimes\varphi & \mapsto &  (A^*\psi)\boxtimes(B^*\varphi) = (A\psi)\boxtimes(B\varphi),
+\ei 
+and so the domain concides and they have the same result for all $\psi\boxtimes\varphi\in\cD_A\otimes\cD_B$. So it is self adjoint.
+\eq 
+
+\bt 
+\label{thrm:SigmaTensorProduct}
+If $A:\cH_1\to\cH_1$ and $B:\cH_2\to\cH_2$ are self adjoint then
+\ben[label=(\roman*)]
+\item $\sigma(A\widehat{\otimes} B) = \overline{\sigma(A)\cdot\sigma(B)}$, where the overline is the topological closure and the $\cdot$ indicates all possible products of elements in the sets. 
+\item $\sigma(A\widehat{\otimes}\id_{\cH_2} + \id_{\cH_1}\widehat{\otimes} B) = \overline{\sigma(A)+\sigma(B)}$, where again the overline is the topological closure.
+\een
+\et 
+
+An application of the second of these results finds use when you know how to measure the observable $A$ on system 1 and $B$ on system 2, then you can measure them on the composite system. 
+
+\subsection{Symmetric and Antisymmetric Tensor Products}
+
+Recalling \Cref{rmk:TensorOrderMatters}, if we do have $\cH_1=\cH_2$ it is possible to define a symmetric and a antisymmetric tensor product. These definitions are important in quantum mechanics as they allow us to categorise particles according to their so called \emph{exchange statistics}. The symmetric composite system concerns a system of two (and by induction, any number) of \emph{bosons}, whereas the antisymmetric one corresponds to \emph{fermions}. These are both examples of what are known as \emph{indistinguishable particles}, meaning that two fermions of the same type (two electrons, say) cannot be distinguished from each other. 
+A good analogy is to consider two identical looking balls. Imagine being in a room with the two balls on the floor. Someone asks you to leave the room and then calls you back in. They then ask you whether the two balls, still in the same places on the floor, have switched places or not? Of course there is no way for you to know, as they look identical, and you weren't present when they potentially could have switched. 
+
+The version in QM is related to whether they live on the same Hilbert space. Recalling \Cref{rem:ElectronCompositeHilbert}, we see that this means that, not only are they allowed to move within the same physical space, they also have the same angular momentum (or \emph{spin}). For the two particles to be indistinguishable, their composite Hilbert spaces must be the same. For example, if a divider was put between the balls, and you knew the balls could only move along the floor, you would know that they couldn't possibly have changed places --- this could correspond to one electron having $L^2(U,\lambda)$ and the other having $L^2(V,\lambda)$ where $U,V\ss R^3$ with $U\cap V =\varnothing$.
+
+\bd 
+Let $\psi,\varphi\in\cH$, then we define their \emph{symmetric} tensor product as 
+\bse 
+\psi \boxdot \varphi := \frac{1}{2}(\psi\boxtimes\varphi + \varphi\boxtimes\psi),
+\ese 
+which is an element of the \emph{symmetric composite Hilbert space}, defined as 
+\bse 
+\cH\odot\cH := \Bigg\{ \sum_{i,j=1}^{\dim(\cH)}a_{ij}e_i\boxdot e_j \, \Big| \, a_{ij}\in\C, \sum_{i,j}|a_{ij}|^2<\infty\Bigg\},
+\ese 
+where $\{e_i\}$ is a basis of $\cH$.
+\ed 
+
+\br 
+Note it follows from the definition that $a_{ij}=a_{ji}$ for a symmetric composite Hilber space. 
+\er 
+
+\bd 
+Let $\psi,\varphi\in\cH$, then we define their \emph{antisymmetric} tensor product as 
+\bse 
+\psi \boxwedge \varphi := \frac{1}{2}(\psi\boxtimes\varphi - \varphi\boxtimes\psi),
+\ese 
+which is an element of the \emph{antisymmetric composite Hilbert space}, defined as 
+\bse 
+\cH\owedge\cH := \Bigg\{ \sum_{i,j=1}^{\dim(\cH)}a_{ij}e_i\boxwedge e_j \, \Big| \, a_{ij}\in\C, \sum_{i,j}|a_{ij}|^2<\infty\Bigg\}
+\ese 
+\ed 
+
+\br 
+Note it follows from the definition that $a_{ij}=-a_{ji}$ for a antisymmetric composite Hilber space. 
+\er 
+
+\br 
+For $\psi\in\cH$ we have $\psi\boxwedge\psi = 0$, which is known as the \emph{Pauli exclusion principle for Fermions}.
+\er 
+
+\br 
+For $\psi,\varphi\in\cH$ where $\psi$ and $\varphi$ are linearly independent, then 
+\bse 
+\psi\boxwedge\varphi = \frac{1}{2} (\psi\boxtimes\varphi - \varphi\boxtimes\psi) \neq \widetilde{\psi}\boxtimes\widetilde{\varphi},
+\ese 
+for some $\widetilde{\psi},\widetilde{\varphi}\in\cH$. Which again emphasises that its important we consider the space of all linear combinations. 
+\er 
+
+\bd 
+Let $A,B:\cH\to\cH$ be linear operators. Then we can define the \emph{symmetric tensor product of linear maps} as 
+\bi{rrCl}
+A\widehat{\odot} B : & \cH\odot\cH & \to & \cH\odot\cH \\
+& \psi\boxdot \varphi & \mapsto & (A\widehat{\odot} B)(\psi\boxdot \varphi) := (A\psi)\boxdot(B\varphi).
+\ei 
+\ed 
+
+\bd 
+Let $A,B:\cH\to\cH$ be linear operators. Then we can define the \emph{antisymmetric tensor product of linear maps} as 
+\bi{rrCl}
+A\widehat{\owedge} B : & \cH\owedge\cH & \to & \cH\owedge\cH \\
+& \psi\boxwedge \varphi & \mapsto & (A\widehat{\owedge} B)(\psi\boxwedge \varphi) := (A\psi)\boxwedge(B\varphi).
+\ei 
+\ed 
+
+\subsection{Collapse of Notation}
+
+As mentioned before, we shall now change our notation to that of the standard literature. That is 
+\bi{rCl}
+\otimes, \boxtimes, \widehat{\otimes} & \to & \otimes, \\
+\odot, \boxdot, \widehat{\odot} & \to & \odot, \\
+\owedge, \boxwedge, \widehat{\owedge} & \to & \wedge.
+\ei 
+
+\subsection{Entanglement}
+
+As has been stressed many times, recall 
+\bse 
+\{\psi\otimes\varphi \, | \, \psi\in\cH_1, \varphi\in\cH_2\} \subsetneqq \cH_1\otimes\cH_2.
+\ese 
+
+\bd 
+We call an element $\Psi\in\cH_1\otimes\cH_2$ \emph{simple} if there exists a $\psi\in\cH_1$ and a $\varphi\in\cH_2$ such that 
+\bse 
+\Psi = \psi\otimes\varphi.
+\ese 
+If it is not of this form (i.e. you need linear combinations) then it is called \emph{non-simple}.
+\ed 
+
+Recall: A state $\rho:\cH\to\cH$ is called \emph{pure} if
+\bse 
+\exists \psi \in\cH \, : \, \forall \alpha\in\cH \, : \, \rho_{\psi}(\alpha) = \frac{\braket{\psi}{\varphi}}{\braket{\psi}{\psi}} \psi,
+\ese 
+or, equivalently, we can think of 
+\bse 
+\rho_{\psi}(\cdot) := \frac{\braket{\psi}{\cdot}}{\braket{\psi}{\psi}} \psi.
+\ese 
+
+\bd 
+Let $\Psi\in\cH_1\otimes\cH_2$. Then a pure state $\rho_{\Psi}$ on the composite system is called \emph{non-entangled} if there exists $\rho_{\psi}$ and $\rho_{\varphi}$ for $\psi\in\cH_1$ and $\varphi\in\cH_2$ such that\footnote{Note the tensor product here is that between linear operators.} 
+\bse 
+\rho_{\Psi} = \rho_{\psi}\otimes\rho_{\varphi}.
+\ese 
+Otherwise, the state is called \emph{entangled}.
+\ed 
+
+\bl 
+A state $\rho_{\Psi}$ is non-entangled if and only if $\Psi$ is simple.
+\el 
+
+\bq 
+Assume $\Psi$ is simple. Then 
+\bi{rCl}
+\rho_{\Psi}(\cdot) & = & \frac{\braket{\Psi}{\cdot}_{12}}{\braket{\Psi}{\Psi}_{12}}\Psi \\
+& = & \frac{\braket{\psi\otimes\varphi}{\cdot}_{12}}{\braket{\psi\otimes\varphi}{\psi\otimes\varphi}_{12}}\psi\otimes\varphi \\
+& = & \frac{\braket{\psi}{\cdot}_1\braket{\varphi}{\cdot}_2}{\braket{\psi}{\psi}_1\braket{\varphi}{\varphi}_2}\psi\otimes\varphi \\
+& = & \bigg(\frac{\braket{\psi}{\cdot}_1}{\braket{\psi}{\psi}_1}\psi\bigg)\otimes \bigg(\frac{\braket{\varphi}{\cdot}_2}{\braket{\varphi}{\varphi}_2}\varphi\bigg) \\
+& = & (\rho_{\psi}(\cdot)\big)\otimes (\rho_{\varphi}(\cdot)\big),
+\ei 
+where in the last two lines the $\otimes$ is the tensor product between linear maps. 
+
+The reverse part of the proof (starting from $\rho_{\Psi}$ non-entangled) follows from working backwards through the above. 
+\eq 
+
+\bl 
+A state $\rho_{\Psi}$ is entangled if and only if $\Psi$ is non-simple. 
+\el 
+
+\bq 
+This proof is trivial given the previous one, as if $\Psi$ is non-simple then $\rho_{\Psi}$ cannot be non-entangled, and vice versa. 
+\eq 

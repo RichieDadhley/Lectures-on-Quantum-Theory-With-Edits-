@@ -1,0 +1,434 @@
+\documentclass[a4paper,11pt]{article}
+\pdfoutput=1 % if your are submitting a pdflatex (i.e. if you have images in pdf, png or jpg format)
+
+
+\usepackage{imakeidx}
+\indexsetup{firstpagestyle=empty}
+%\makeindex[intoc, columns=2, title=Alphabetical Index, options= -s example_style.ist]
+
+
+\usepackage{jheppub} % for details on the use of the package, please
+                     % see the JHEP-author-manual
+\usepackage[T1]{fontenc} % if needed
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % Required for including images
+\graphicspath{{Figures/}} % Set the default folder for images
+
+\usepackage{relsize} % for resizing maths relations
+
+\usepackage{enumitem} % Required for manipulating the whitespace between and within lists
+
+\usepackage{subfig} % Required for creating figures with multiple parts (subfigures)
+
+\usepackage{amsmath,amssymb,amsthm,mathrsfs,amsfonts,xfrac,pifont} % For including math equations, theorems, symbols, etc
+
+\usepackage{bbold}
+
+\usepackage{cleveref} % More descriptive referencing
+
+\usepackage{physics}
+
+\usepackage{booktabs}
+
+%page margins and paragraph indentation
+%\usepackage{geometry}
+%\geometry{a4paper,hmarginratio=1:1}
+%\setlength{\parindent}{0pt}
+
+%fonts
+%   \usepackage[cm]{sfmath}
+%   \renewcommand{\familydefault}{\sfdefault}
+%   \usepackage{libertine}
+%   \usepackage[libertine]{newtxmath}
+
+
+\usepackage{array,tabularx}
+\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage{etoolbox}
+%\usepackage{mathtools}
+\usepackage{xcolor,tikz}
+\definecolor{lightergray}{rgb}{0.9,0.9,0.9}
+
+\usepackage{siunitx}
+\usepackage{soul}
+
+\usetikzlibrary{matrix,calc,positioning,decorations.markings,decorations.pathmorphing,decorations.pathreplacing}%tikzmark,
+\usetikzlibrary{arrows,cd}
+\usepackage{bbding}
+\usetikzlibrary{positioning}
+%\tikzset{every picture/.style={remember picture}}
+\tikzset{>=stealth}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns}
+
+
+\usepackage{cancel}
+\newcommand\Ccancel[2][black]{\renewcommand\CancelColor{\color{#1}}\cancel{#2}}
+
+\newcommand*\Laplace{\mathop{}\!\mathbin\bigtriangleup}
+
+\usepackage{scalerel,stackengine}
+\stackMath
+\newcommand\reallywidehat[1]{%
+\savestack{\tmpbox}{\stretchto{%
+  \scaleto{%
+    \scalerel*[\widthof{\ensuremath{#1}}]{\kern-.6pt\bigwedge\kern-.6pt}%
+    {\rule[-\textheight/2]{1ex}{\textheight}}%WIDTH-LIMITED BIG WEDGE
+  }{\textheight}% 
+}{0.5ex}}%
+\stackon[1pt]{#1}{\tmpbox}%
+}
+
+\makeatletter
+\patchcmd{\@IEEEeqnarray}{\relax}{\relax\intertext@}{}{}
+\makeatother
+
+\makeatletter
+\newcommand*{\boxwedge}{%
+  \mathbin{%
+    \mathpalette\@boxwedge{}%
+  }%
+}
+\newcommand*{\@boxwedge}[2]{%
+  % #1: math style
+  % #2: unused
+  \sbox0{$#1\boxplus\m@th$}%
+  \dimen2=.5\dimexpr\wd0-\ht0-\dp0\relax % side bearing
+  \dimen@=\dimexpr\ht0+\dp0\relax
+  \def\lw{.06}% linw width as factor for height of \boxplus
+  \kern\dimen2 % side bearing
+  \tikz[
+    line width=\lw\dimen@,
+    line join=round,
+    x=\dimen@,
+    y=\dimen@,
+  ]
+  \draw
+    (\lw/2,0) rectangle (1-\lw,1-\lw)
+    (\lw,0) -- (.5,1-\lw-\lw/2) -- (1-\lw-\lw/2 ,0)
+  ;%
+  \kern\dimen2 % side bearing
+}
+\makeatletter
+
+\makeatletter
+\newcommand*{\owedge}{%
+  \mathbin{%
+    \mathpalette\@owedge{}%
+  }%
+}
+\newcommand*{\@owedge}[2]{%
+  % #1: math style
+  % #2: unused
+  \sbox0{$#1\oplus\m@th$}%
+  \dimen2=.5\dimexpr\wd0-\ht0-\dp0\relax % side bearing
+  \dimen@=\dimexpr\ht0+\dp0\relax
+  \def\lw{.04}% line width as factor for height of \oplus
+  \def\radius{.5-\lw/2}%
+  \kern\dimen2 % side bearing
+  \tikz[
+    line width=\lw\dimen@,
+    line join=round,
+    x=\dimen@,
+    y=\dimen@,
+    baseline=\dimexpr-.5\dimen@+\dp0\relax,
+  ]
+  \draw
+    (0,0) circle[radius=\radius]
+    % -36.87 = -90 + 2 atan(1/2)
+    % 216.87 = 180 + 36.87
+    (225:\radius) -- (0,.5-\lw) -- (-45:\radius)
+  ;%
+  \kern\dimen2 % side bearing  
+}
+\makeatother
+
+\newcommand{\squig}{{\scriptstyle\sim\mkern-3.9mu}}
+\newcommand{\lsquigend}{{\scriptstyle\lhd\mkern-3mu}}
+\newcommand{\rsquigend}{{\scriptstyle\rule{.1ex}{0ex}\rhd}}
+\newcounter{sqindex}
+\newcommand\squigs[1]{%
+  \setcounter{sqindex}{0}%
+  \whiledo {\value{sqindex}< #1}{\addtocounter{sqindex}{1}\squig}%
+}
+\newcommand\rsquigarrow[2]{%
+  \mathbin{\stackon[2pt]{\squigs{#2}\rsquigend}{\scriptscriptstyle\text{#1\,}}}%
+}
+\newcommand\lsquigarrow[2]{%
+  \mathbin{\stackon[2pt]{\lsquigend\squigs{#2}}{\scriptscriptstyle\text{\,#1}}}%
+}
+
+\usepackage{wrapfig}
+\usepackage{textcomp}
+%\usepackage{unicode-math}
+\usepackage{scalerel}
+
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\raggedright}{}{0em}{\colorsection}[\titlerule]
+\titleformat{name=\section,numberless}{\large\scshape\bfseries\raggedright}{}{0em}{\colorsectionnonumber}[\titlerule]
+
+\titleformat{\subsection}{\bfseries\raggedright}{}{0em}{\colorsubsection}
+\titleformat{name=\subsection,numberless}{\bfseries\raggedright}{}{0em}{\colorsubsectionnonumber}
+
+%\titlespacing{\subsection}{0em}{0.5em}{0.75em}
+
+\newcommand{\colorsection}[1]{%
+    \colorbox{lightergray}{\parbox{\dimexpr\textwidth-2\fboxsep}{\thesection\ \ #1}}}
+\newcommand{\colorsectionnonumber}[1]{%
+    \colorbox{lightergray}{\parbox{\dimexpr\textwidth-2\fboxsep}{#1}}}
+    
+\newcommand{\colorsubsection}[1]{%
+    \colorbox{lightergray}{\parbox{\dimexpr\textwidth-2\fboxsep}{\thesubsection\ #1}}}
+\newcommand{\colorsubsectionnonumber}[1]{%
+    \colorbox{lightergray}{\parbox{\dimexpr\textwidth-2\fboxsep}{#1}}}
+
+
+
+
+
+
+
+%\newcommand{\tikzmark}[3][]{\tikz[overlay,remember picture,baseline] \node [anchor=base,#1](#2) {#3};}
+
+
+%\usepackage[cmintegrals,cmbraces]{newtxmath}
+%\usepackage{ebgaramond-maths}
+%\newcommand{\tikzmark}[1]{\tikz[baseline,remember picture] \coordinate (#1) {};}
+
+%\usepackage{mathptmx}
+\usepackage{calc}
+
+%----------------------------------------------------------------------------------------
+%	THEOREM STYLES
+%---------------------------------------------------------------------------------------
+
+\usepackage{tcolorbox}
+% style for axioms
+%\newenvironment{framedaxiom}{\begin{tcolorbox}[colframe=blue!10!black,autoparskip]\begin{axiom}}{\end{axiom}\end{tcolorbox}}
+
+
+
+%--------------------------------------------
+
+%\newtheoremstyle{dotless}{}{}{\itshape}{}{\bfseries}{}{ }{}
+%\theoremstyle{dotless}
+
+\theoremstyle{definition} % Define theorem styles here based on the definition style (used for definitions and examples)
+\newtheorem*{definition}{Definition}
+
+\newtheorem*{definewx}{Definition}
+\newenvironment{definew}
+{\pushQED{\qed}\renewcommand{\qedsymbol}{$\diamondsuit$}\definewx}
+{\popQED\enddefinewx}
+
+\theoremstyle{plain} % Define theorem styles here based on the plain style (used for theorems, lemmas, propositions)
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{axiom}{Axiom}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{remark} % Define theorem styles here based on the remark style (used for remarks and notes)
+\newtheorem*{notation}{Notation}
+\newtheorem*{solution}{Solution}
+
+\newtheoremstyle{underline}% name
+{}        % Space above, empty = `usual value'
+{}              % Space below
+{}              % Body font
+{}    % Indent amount (empty = no indent, \parindent = para indent)
+{}              % Thm head font
+{.}             % Punctuation after thm head
+{1.5mm}         % Space after thm head: \newline = linebreak
+{{\underline{\textit{\thmname{#1}\thmnumber{ #2}}~\thmnote{(#3)}\unskip}}}  % Thm head spec
+
+\theoremstyle{underline}
+
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+%----------------------------------------------------------------------------------------
+%	HYPERLINKS
+%---------------------------------------------------------------------------------------
+%clever cross-references
+%\usepackage[noabbrev,capitalize]{cleveref}
+
+
+\makeatletter
+\newcommand\footnoteurl@[2]{#2\footnote{\url@{#1}}}
+\DeclareRobustCommand{\footnoteurl}{\hyper@normalise\footnoteurl@}
+\makeatother
+
+
+\usepackage{hyperref}
+\hypersetup{
+%draft, % Uncomment to remove all links (useful for printing in black and white)
+colorlinks=true, linkcolor=black, breaklinks=true,
+%bookmarks=true,
+bookmarksnumbered=true,
+%urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, % Link colors
+pdftitle={Schuller's Lectures on Quantum Theory}, % PDF title
+pdfauthor={Frederic P. Schuller, Simon Rea, Richie Dadhley, Jonah Herr}, % PDF Author
+pdfsubject={}, % PDF Subject
+pdfkeywords={}, % PDF Keywords
+pdfencoding=unicode, %
+pdfstartview={FitH}, %
+pdfcreator={pdfLaTeX/Overleaf}, % PDF Creator
+}
+
+%dotted lines in contents
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+
+
+\input{shortcuts}
+
+
+
+
+
+
+
+
+
+
+
+\title{\boldmath Lectures on Quantum Theory}
+
+
+%% %simple case: 2 authors, same institution
+\author{Dr Frederic P. Schuller} 
+%\author{Simon Rea}
+\affiliation{Friedrich-Alexander-Universit\"at Erlangen-N\"urnberg,\\Institut f\"ur Theoretische Physik III}
+
+% more complex case: 4 authors, 3 institutions, 2 footnotes
+%\author[a,b,1]{F. Irst,\note{Corresponding author.}}
+%\author[c]{S. Econd,}
+%\author[a,2]{T. Hird\note{Also at Some University.}}
+%\author[a,2]{and Fourth}
+
+% The "\note" macro will give a warning: "Ignoring empty anchor..."
+% you can safely ignore it.
+
+%\affiliation[a]{One University,\\some-street, Country}
+%\affiliation[b]{Another University,\\different-address, Country}
+%\affiliation[c]{A School for Advanced Studies,\\some-location, Country}
+
+% e-mail addresses: one for each author, in the same order as the authors
+\emailAdd{fps@aei.mpg.de}
+%fschuller@perimeterinstitute.ca
+%\emailAdd{second@asas.edu}
+%\emailAdd{third@one.univ}
+%\emailAdd{s.rea.hw@gmail.com}
+
+
+
+
+
+\begin{document} 
+
+\rule{0cm}{2cm}\\
+\includegraphics[width=14cm]{graphics/faulogo}
+\maketitle 
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+\markright{Introduction}
+\input{qt/00intro}
+\newpage
+
+\section{Axioms of quantum mechanics}
+\input{qt/01axioms}
+\newpage
+
+\section{Banach spaces}
+\input{qt/02banach}
+\newpage
+
+\section{Separable Hilbert Spaces}
+\input{qt/03separable}
+\newpage
+
+\section{Projectors, bras and kets}
+\input{qt/04projectors}
+\newpage
+
+\section{Measure theory}
+\input{qt/05measure}
+\newpage
+
+\section{Integration of measurable functions}
+\input{qt/06integration}
+\newpage
+
+\section{Self-adjoint and essentially self-adjoint operators}
+\input{qt/07self-adjoint}
+\newpage
+
+\section{Spectra and perturbation theory}
+\input{qt/08spectra}
+\newpage
+
+\section{Case study: momentum operator}
+\input{qt/09momentum}
+\newpage
+
+\section{Inverse spectral theorem}
+\input{qt/10inverse}
+\newpage
+
+\section{Spectral theorem}
+\input{qt/11spectral}
+\newpage
+
+\section{Stone's Theorem and Construction of Observables}
+\input{qt/12stonestheorem}
+\newpage
+
+\section{Spin}
+\input{qt/13spin}
+\newpage
+
+\section{Composite Systems}
+\input{qt/14compositesystems}
+\newpage
+
+\section{Total Spin of Composite System}
+\input{qt/15totalspincomposite}
+\newpage
+
+\section{Quantum Harmonic Oscillator}
+\input{qt/16qho}
+\newpage
+
+\section{Measurements of Observables}
+\input{qt/17measurements}
+\newpage
+
+\section{The Fourier Operator}
+\input{qt/18fourieroperator}
+\newpage
+
+\section{The Schrodinger Operator}
+\input{qt/19schrodingeroperator}
+\newpage
+
+\section{Periodic Potentials}
+\input{qt/20periodicpotentials}
+\newpage
+
+\section{Relativistic Quantum Mechanics}
+\input{qt/21RelativisticQM}
+\newpage
+
+
+\section*{Further readings}
+\addcontentsline{toc}{section}{Further readings}
+\input{biblio}
+\newpage
+
+%\printindex
+
+\end{document}

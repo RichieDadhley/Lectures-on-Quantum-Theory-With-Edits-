@@ -1,0 +1,402 @@
+The inverse spectral theorem tells us how to construct a self adjoint operator $A_P$ given a projection valued measure $P$. The aim of this lecture is to do the opposite; given a self adjoint operator $A$ we want to find a PVM $P_A$. We want the two methods to be in unison --- that is we want $A_{P_A} = A$ and $P_{A_P} = P$. We shall start by assuming that $A$ can be written in integral form, and then shall remove this restriction.
+
+\subsection{Measurable Function Applied To A Spectrally Decomposable Self Adjoint Operator}
+
+The term \textit{spectrally decomposable} means that is has integral form. 
+
+\bd 
+Let the self adjoint operator $A$ be \emph{spectrally decomposable}; i.e. there exists a PVM $P$ such that 
+\bse 
+A = \int_{\R} \id_{\R} dP,
+\ese 
+then for any measurable function $f:\R\to\C$, we define the operator 
+\bse 
+f(A) \cl \cD_{\int fdP} \to \cH,
+\ese 
+given by
+\bse 
+f(A) := \int_{\R} (f\circ \id_{\R} )dP \equiv \int_{\R} f(\lambda) P(d\lambda).
+\ese 
+\ed 
+
+\br 
+The spectral theorem will show that every self adjoint operator $A$ is spectrally decomposable by virtue of a uniquely detemerined $P$.
+\er 
+
+\bc 
+If $f\cl \R \to \R$, then $f(A)$ is again self adjoint. 
+\ec 
+
+\bq 
+\bi{rCl}
+[f(A)]^* & := & \bigg[\int_{\R} (f\circ \id_{\R} )dP\bigg]^* \\
+& = & \int_{\R} (\overline{f} \circ \id_{\R})dP \\
+& = & \int_{\R} fdP \\
+& =: & f(A).
+\ei 
+\eq 
+
+Let us now consider two important examples.
+\be 
+\label{ex:ExpSpectral}
+Let $A=\int_{\R}\lambda P(d\lambda)$ be self adjoint. Then
+\bse 
+\exp(A) := \int_{\R} e^{\lambda} P(d\lambda)
+\ese
+is self adjoint due to the previous Corollary. However 
+\bse 
+\exp(iA) := \int_{\R} e^{i\lambda} P(d\lambda)
+\ese 
+is \emph{not} self adjoint. This latter case is of high importance in QM, as can be seen by revisiting Axiom 4 at the start. 
+\ee 
+
+\be 
+Let $A=\int_{\R}\lambda P(d\lambda)$ be self adjoint and $\Omega\in\sigma(\cO_{\R})$. Then
+\bse
+P(\Omega) = \int_{\R} \chi_{\Omega} dP
+\ese
+implies 
+\bi{rCl}
+\sq \big(P(\Omega)\big) & := & \int_{\R} (\sq \circ \chi_{\Omega} dP \\ 
+& \equiv & \int_{\R} [\chi_{\Omega}(\lambda)]^2 P(d\lambda) \\
+& = & \int_{\R} \chi_{\Omega}(\lambda) P(d\lambda) \\
+& = & P(\Omega),
+\ei 
+which is one of the projection conditions.
+\ee 
+
+\subsection{Reconstruct PVM From a Spectrally Decomposable, Self Adjoint Operator}
+
+The key to reconstructing the associated PVM $P$ is to consider the resolvents. 
+
+\bd
+Given a spectrally decomposable operator $A$ and an the resolvant set $\rho(A)$, we define
+\bse 
+r_z(A) = R_Z(A) := (A-z\id_{\cH})^{-1},
+\ese 
+which is rewritten as
+\bi{rrCl}
+r_z \cl & \R & \to & \C \\
+& \lambda & \mapsto & \frac{1}{\lambda -z},
+\ei 
+and, due to the fact that $A$ is spectrally decomposable, satisfies 
+\bse 
+r_z(A) = \int_{\R} (r_z\circ \id_{\R})dP \equiv \int_{\R} \frac{1}{\lambda-z}P(d\lambda).
+\ese 
+\ed 
+
+Note, using the results in the previous lecture, we have that for any $\psi\in\cH$,
+\bi{rCl}
+\braket{\psi}{R_A(z)\psi} & = & \braket{\psi}{ \bigg(\int_{\R}(r_z\circ\id_{\R})dP\bigg)\psi} \\
+& = & \int_{\R} (r_z\circ\id_{\R} )d\mu_{\psi} \\
+& \equiv & \int_{\R} \frac{1}{\lambda - z} \mu_{\psi}(d\lambda).
+\ei 
+
+\bd 
+A \emph{Herglotz function} is an analytic complex function that maps the upper half plane into itself, but need not be surjective or injective. They are also known as \emph{Nevanlinna/Pick/R} functions. 
+\ed 
+
+\bt 
+The function 
+\bi{rrCl}
+\braket{\psi}{R_A(\cdot) \psi}  \cl & \C & \to & \C \\
+& z & \mapsto & \int_{\R} \frac{1}{\lambda -z} \mu_{\psi} (d\lambda)
+\ei 
+is Herglotz.
+\et 
+
+\bq 
+Recall
+\bse 
+\mu_{\psi}\cl\sigma(\cO_{\R})\to\R^+_0
+\ese 
+is real-valued. Then using 
+\bse 
+\Im{(r)} = \frac{1}{2}(r-\overline{r}),
+\ese 
+we have 
+\bi{rCl}
+\Im{\braket{\psi}{R_A(z)\psi}} & = & \int_{\R} \Im\bigg(\frac{1}{\lambda - z}\bigg) \mu_{\psi}(d\lambda) \\
+& = & \frac{1}{2}\int_{\R}\bigg[ \frac{1}{\lambda-z} - \frac{1}{\lambda -\overline{z}}\bigg] \mu_{\psi}(d\lambda) \\
+& = & \int_{\R} \frac{z-\overline{z}}{2|\lambda-z|^2}\mu_{\psi} (d\lambda) \\
+& = & \Im(z)  \int_{\R} \frac{1}{|\lambda-z|^2} \mu_{\psi}(d\lambda).
+\ei 
+Then, since the fact that the integral is Lebesgue and the intergrand is non-negative and so 
+\bse
+\Im\braket{\psi}{R_A(z)\psi} > 0 \quad \Leftrightarrow \quad  \Im(z) > 0.
+\ese 
+\eq 
+
+Recalling the start of last lecture, if we can find a way to construct $\mu_{\psi}$ from our $A$ then we can use that to reconstruct $P$. The result of this is the previously mentioned Stieltjes Inversion Formula, and it is obtained as follows. 
+
+Let $t,\epsilon\in\R$. Then, since $A$ is self adjoint and so its spectrum is purely real, $t+i\epsilon\in\rho(A)$. This allows us to act on it with $R_A$. Thus, consider 
+\bi{rCl} 
+\lim_{\varepsilon\to 0^+} \frac{1}{\pi}\int_{t_1}^{t_2}dt \Im\braket{\psi}{R_A(t+i\varepsilon)\psi} & = & \lim_{\varepsilon\to0^+} \frac{1}{\pi} \int_{t_1}^{t_2}dt \int_{\R} \frac{\varepsilon}{|\lambda-t-i\varepsilon|^2}\mu_{\psi}(d\lambda) \\
+& = & \lim_{\varepsilon\to0^+} \int_{\R} \bigg( \frac{1}{\pi} \int_{t_1}^{t_2}dt \frac{\varepsilon}{(\lambda-t)^2 +\varepsilon^2}\bigg)\mu_{\psi}(d\lambda), 
+\ei
+where Fubini's Theorem\footnote{See  \href{https://en.wikipedia.org/wiki/Fubini\%27s_theorem}{Wiki}} has been used. The inner integral is a standard integral, with result
+\bse
+\frac{1}{\pi} \int_{t_1}^{t_2} dt \frac{\varepsilon}{(\lambda-t)^2+\varepsilon^2} = \frac{1}{\pi}\bigg[ \arctan\bigg(\frac{t-\lambda}{\varepsilon}\bigg)\bigg]^{t_2}_{t_1}.
+\ese 
+Now strictly, at this stage, we cannot simply pull the $\varepsilon$ limit into this expression; we would need to check that the above result is bounded first and then, by dominated convergence, we can pull it in. This will turn out to be true, and so in order to simplify the following we consider $\varepsilon$ to be small here. 
+
+In order to work out the above expression, we can use the $\lambda$-graphs. Let's plot both terms (including the overall minus sign that comes with $t_1$) on the same graph: 
+
+\begin{tikzpicture}
+\begin{axis}[
+    domain=-10:10,
+    xscale=1.5,yscale=1,
+    xmin=0, xmax=10,
+    ymin=-2, ymax= 2,
+    samples=1000,
+    axis lines=center,
+    xticklabels={},
+    yticklabels={},
+]
+    \addplot+[mark=none] {rad(atan((7-x)/(0.1))};
+    \addplot+[mark=none] {-rad(atan((3-x)/(0.1))};
+\end{axis}
+\node at (-0.35,0.7) {$-\frac{1}{2}$};
+\node at (-0.3,5) {$\frac{1}{2}$};
+\node at (3.3,2.6) {$t_1$};
+\node at (7.5,2.6) {$t_2$};
+\node at (10,2.6) {$\lambda$};
+\node at (11.5,4.8) {\textcolor{red}{$-\frac{1}{\pi}\arctan\big(\frac{t_1-\lambda}{\varepsilon}\big)$}};
+\node at (11.5,1) {\textcolor{blue}{$\frac{1}{\pi}\arctan\big(\frac{t_2-\lambda}{\varepsilon}\big)$}};
+\end{tikzpicture}
+
+Taking the limit and adding gives 
+
+\begin{tikzpicture}
+\begin{axis}[
+    domain=-10:10,
+    xscale=1.5,yscale=1,
+    xmin=0, xmax=10,
+    ymin=0, ymax= 2,
+    samples=1000,
+    axis lines=center,
+    xticklabels={},
+    yticklabels={},
+]
+\end{axis}
+\node at (-0.35,4.3) {$1$};
+\node at (-0.35,2.15) {$\frac{1}{2}$};
+\node at (-0.35,0) {$0$};
+\node at (3.3,-0.35) {$t_1$};
+\node at (7.5,-0.35) {$t_2$};
+\node at (10,-0.35) {$\lambda$};
+\draw[blue, ultra thick] (0,0) -- (3.3,0);
+\draw[blue, ultra thick] (3.3,4.3) -- (7.5,4.3);
+\draw[blue, ultra thick] (7.5,0) -- (10,0);
+\draw[blue] (3.3,0) circle (3pt);
+\filldraw[blue] (3.3,2.15) circle (3pt);
+\draw[blue] (3.3,4.3) circle (3pt);
+\draw[blue] (7.5,4.3) circle (3pt);
+\filldraw[blue] (7.5,2.15) circle (3pt);
+\draw[blue] (7.5,0) circle (3pt);
+\end{tikzpicture}
+
+So we have
+\bse 
+\lim_{\varepsilon\to0^+} \frac{1}{\pi}\int_{t_1}^{t_2} dt \frac{\varepsilon}{(\lambda-t)^2+\varepsilon^2} = \frac{1}{2}\big( \chi_{(t_1,t_2)} + \chi_{[t_1,t_2]} \big),
+\ese 
+and 
+\bse 
+\lim_{\varepsilon\to0^+} \frac{1}{\pi}\int_{t_1}^{t_2}dt \Im\braket{\psi}{R_A(t+i\varepsilon)\psi} = \frac{1}{2} \int_{\R} \big(\chi_{(t_1,t_2)} + \chi_{[t_1,t_2]} \big)\mu_{\psi}(d\lambda).
+\ese 
+
+Finally, we have the Stieltjes Inversion Formula. 
+
+\bt[Stieltjes Inversion Formula] 
+Given a spectrally decomposable, self adjoint operator $A$ and its associated resolvent map $R_A$, we can construct a real-valued measure
+\bse 
+\mu^A_{\psi}\big((-\infty,\lambda] \big) = \lim_{\delta\to0^+}\lim_{\varepsilon\to0^+}\frac{1}{\pi} \int_{-\infty}^{\lambda+\delta} dt \Im\braket{\psi}{R_A(t+i\varepsilon)\psi}. 
+\ese 
+\et 
+
+\bq 
+\bi{rCl}
+\lim_{\delta\to0^+}\lim_{\varepsilon\to0^+}\frac{1}{\pi} \int_{-\infty}^{\lambda+\delta} dt \Im\braket{\psi}{R_A(t+i\varepsilon)\psi} & = & \lim_{\delta\to0^+} \frac{1}{2}\int_{\R} \big(\chi_{(-\infty,\lambda+\delta)} + \chi_{(-\infty,\delta]} \big)\mu_{\psi}(d\lambda) \\
+& = & \int_{\R} \chi_{(-\infty,\lambda]}\mu_{\psi}(d\lambda) \\
+& = & \mu_{\psi}\big((-\infty,\lambda]),
+\ei
+where we used the fact that the $\chi(\Omega)$ is bounded to move the limit inside the integral along with the fact that 
+\bse 
+\lim_{\delta\to0^+} (-\infty,\lambda+\delta) = (-\infty,\lambda].
+\ese 
+\eq 
+
+\br 
+Note the fact that $\braket{\psi}{R_A(t+i\varepsilon)\psi}$ is Herglotz with the fact that $\varepsilon>0$ gives us that $\mu_{\psi}^A \geq 0$, which is required for it to be a real-valued measure. 
+\er 
+
+\br
+If we already know that $A$ is spectrally decomposable w.r.t. some PVM $P$, then we can recover $P$ from $A$ by virtue of: for any $\Omega\in\sigma(\cO_{\R})$ and for all $\psi,\varphi\in\cH$
+\bse 
+\braket{\psi}{P(\Omega)\varphi} = \int_{\R} \chi_{\Omega} d\mu_{\psi,\varphi},
+\ese 
+where $\mu_{\psi,\varphi}$ is obtained from $\mu_{\psi}$ using the method given at the start of the previous lecture.
+\er
+
+\subsection{Construction Of PVM From A Self Adjoint Operator}
+
+We need to free ourselves from the fact that $A$ is known to be spectrally decomposable from the start. We could do this by trying to recreate the above method, i.e. arrive at the Stieltjes Inversion Formula for an operator $A$, by showing that 
+
+\ben[label=(\roman*)]
+\item $\braket{\psi}{R_A(\cdot)\psi} : \C \to \C$ is Herglotz for any self adjoint $A$
+\item $\braket{\psi}{P(\Omega)\varphi} := \int_{\R}\chi_{\Omega}d\mu_{\psi,\varphi}$ is indeed a PVM.
+\een 
+
+In order to prove these we first need a new theorem. 
+\bt[First-Resolvent Formula]
+For any operator $A:\cD_{A}\to\cH$ and $a,b\in\rho(A)$ we have 
+\bse 
+R_A(a)-R_A(b) = (a-b)R_A(a)R_A(b) = (a-b)R_A(b)R_A(a).
+\ese 
+\et 
+
+\bq
+Consider 
+\bi{rCl}
+R_A(a) - (a-b)R_A(a)R_A(b) & := & (A-a)^{-1} - (a-b)(A-a)^{-1}(A-b)^{-1} \\
+& = & (A-a)^{-1}\big[\id_{\cH} - (a-b)(A-b)^{-1}\big] \\
+& = & (A-a)^{-1}\big[\id_{\cH} - (a-A+A-b)(A-b)^{-1}\big] \\
+& = & (A-a)^{-1} \big[\id_{\cH} +(A-a)(A-b)^{-1} - (A-b)(A-b)^{-1}\big] \\
+& = & (A-b)^{-1} \\
+& = & R_A(b),
+\ei 
+and similarly for the the other result. 
+\eq 
+
+
+Conclusion, the Spectral Theorem, \Cref{thm:Spectral}, together with the recipe for the construction of the PVM $P$ from a self adjoint operator $A$ holds. 
+
+\subsection{Commuting Operators}
+
+The study of QM is teaming with so called \emph{commutators}. However, they are not as simply defined as is often erroneously assumed. In particular, the commutator between the position and momentum given by 
+\bse 
+[Q^i,P_j] = i\hbar {\delta^i}_j
+\ese 
+is not even defined, unless further provisions are given. This formula appears in the opening sections of almost all QM textbooks though, and so it's important we understand what is meant. 
+
+One can happily write the commutator provided the operators involved are bounded (which from the lecture 9 we see that at least $P_j$ is not).
+
+\bd 
+Let $B_1,B_2\in\cL(\cH)$, i.e. they are bounded linear operators from $\cH$ to $\cH$. Then one may define 
+\bse 
+[B_1,B_2] := B_1\circ B_2 - B_2\circ B_1,
+\ese 
+where 
+\bse 
+[B_1,B_2] \in \cL(\cH).
+\ese 
+\ed 
+
+\br 
+The tuple $(\cL(\cH),+,\cdot,[\cdot,\cdot])$ is a Lie algebra\footnote{See Dr. Schuller's Lectures on the Geometric Anatomy of Theoretical Physics}.
+\er 
+
+\bc 
+\label{cor:ABCCommutator}
+Let $A,B,C\in\cL(\cH)$ then the following holds 
+\bse 
+[A\circ B,C] = [A,C]\circ B + A\circ[B,C].
+\ese 
+\ec 
+
+\bq 
+Consider the action on some arbitrary $\psi\in\cH$. 
+\bi{rCl}
+[A\circ B,C]\psi & := & (A\circ B)\circ (C\psi) - C\circ(A\circ B\psi) \\
+& = & A \circ (B\circ C\psi) - C\circ(A\circ B\psi) \\
+& = & A \circ (C\circ B \psi + [B,C]\psi) - C\circ(A\circ B\psi) \\
+& = & (A \circ C) \circ B \psi + A\circ [B,C]\psi - C\circ(A\circ B\psi) \\
+& = & (C\circ A + [A,C])\circ B\psi + A\circ [B,C]\psi - C\circ(A\circ B\psi) \\
+& = & [A,C]\circ B\psi + A\circ[B,C]\psi \\
+& = & ([A,C]\circ B + A\circ[B,C])\psi,
+\ei 
+where we used the associativity of the composition of maps. Then, as $\psi$ was arbitrary, we have our result. 
+\eq 
+
+\bc 
+Let $A$ and $B$ be two operators. Then if one of the them is unbounded the domain $\cD_{[A,B]}$ may only have a trivial definition, i.e. $\cD_{[A,B]} = \{0_{\cH}\}$.
+\ec 
+
+\bq
+Let $A:\cD_A\to\cH$ be unbounded with $\cD_A \ss \cH$, and define the bounded operator
+\bi{rrCl}
+B_{\varphi} : & \cH & \to & \cH \\
+& \alpha & \mapsto & \braket{\varphi}{\alpha} \psi =: \ell_{\varphi}(\alpha) \psi
+\ei 
+for some fixed $\varphi,\psi\in\cH$ where $\psi\notin\cD_A$. So we have $\ran(B_{\varphi}) = \cH\setminus\cD_A$. Then from the first term in
+\bse
+[A,B_{\varphi}] := A\circ B_{\varphi} - B_{\varphi}\circ A,
+\ese
+it follows that 
+\bse 
+\cD_{[A,B_{\varphi}]} = \ran(B_{\varphi})\cap \cD_{A} = \{0_{\cH}\}.
+\ese 
+\eq 
+
+\bd 
+Two bounded linear operators $A,B\in\cL(\cH)$ are said to \emph{commute} if 
+\bse 
+[A,B] = 0.
+\ese 
+\ed 
+
+\bc 
+Let $A,B\in\cL(\cH)$ be commuting operators. Then if $A$ is also non-degenerate then any $\psi$ that is an eigenvector of $A$ is also an eigenvector of $B$. In other words, the set of $A$'s eigenvectors is contained within the set of $B$'s. 
+\ec 
+
+\bq 
+Let $\psi\in\cD\setminus\{0\}$ be an eigenvector of $A$ with eigenvalue $\lambda\in\C$. Then we have 
+\bi{rCl}
+[A,B]\psi & := & (A\circ B - B\circ A)\psi \\
+& = & A(B\psi) - B(A\psi) \\
+& = & A(B\psi) - \lambda B(\psi),
+\ei 
+where we have used the fact that $B$ is linear. Then from the fact that $[A,B]=0$ it follows that $B\psi$ is also an eigenvalue of $A$ with eigenvalue $\lambda$. Finally from the fact that $A$ is non-degenerate it follows that $B\psi = \mu \psi$ must hold for some $\mu\in\C$.
+\eq 
+
+However, as highlighted at the start of this section, we also want to look at situations when one of the operators may not be bounded. In other words we want to know how to extend the idea of commuting to 
+\ben[label=(\roman*)]
+\item $A$ self adjoint and not necessarily bounded, $B$ bounded. 
+\item Both $A$ and $B$ self adjoint and not necessarily bounded. 
+\een 
+
+As is often the case in maths/physics problems, the strategy is to reduce the problem to the known case. We then have three possible bounded, linear operators constructed from $A$:
+
+\ben[label=(\roman*)]
+\item From the Spectral Theorem we know that if $A$ is self adjoint then there exists a unique PVM $P$ such that $A$ is spectrally decomposable. Recall that, from \Cref{rmk:CharacteristicPVM}, $P_A(\Omega) \in \cL(\cH)$ for any $\Omega\in\sigma(\cO_{\R})$. 
+\item From the definition of the resolvent set, we have $R_A(z)\in\cL(\cH)$ for any $z\in\rho(A)$.
+\item Again, as $A$ is self adjoint it is spectrally decomposable and so we can consider $\exp(itA)$ for some $t\in\R$, which was defined in \Cref{ex:ExpSpectral}. Again this is not a self adjoint operator, but it is unitary, which means $\|\exp(itA)\| = 1$. 
+\een 
+
+\bd
+Let $A$ be self adjoint and $B$ be bounded. $A$ and $B$ are said to commute if either of the following holds
+\ben[label=(\roman*)]
+\item $[R_A(z),B] =0 $ for \emph{some} $z\in\rho(A)$.
+\item $[\exp(itA),B] = 0$ for \emph{some} $t\in\R\setminus\{0\}$.
+\een 
+\ed 
+
+\bd
+Let $A$ and $B$ be self adjoint. They are said to commute is one of the following holds
+\ben[label=(\roman*)]
+\item $[R_A(z_A), R_B(z_B)]=0$ for some $z_A\in\rho(A)$ and $z_B\in\rho(B)$. This is known as the \emph{Resolvent way}.
+\item $[\exp(itA),\exp(isB)]=0$ for some $t,s\in\R\setminus\{0\}$. This is known as the \emph{Weil way}. 
+\item $[P_A(\Omega),P_B(\Omega)] = 0 $ for \emph{all} $\Omega\in\sigma(\cO_{\R})$. This is known as the \emph{Projector way}.
+\een 
+\ed 
+
+\br 
+The literature normally uses a practical, yet misleading, notation at this point. For any of the above we simply write $[A,B]=0$ for commuting $A$ and $B$. However this commutator is \emph{not} the same as the one defined at the start --- i.e. it does not correspond to $A\circ B - B\circ A$. Really we should write it slightly differently to highlight this, i.e. make it red; $\textcolor{red}{[}A,B\textcolor{red}{]}$.
+\er 
+
+\bt 
+Let $A$ and $B$ be self adjoint and bounded. Then 
+\bse 
+[A,B]=0 \quad \Leftrightarrow \quad \textcolor{red}{[}A,B\textcolor{red}{]}=0.
+\ese 
+\et 

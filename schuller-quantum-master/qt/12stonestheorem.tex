@@ -1,0 +1,429 @@
+In this lecture we aim to answer two questions by deriving and using Stone's Theorem. They are 
+\ben[label=(\roman*)]
+\item How arbitrary is the stipulation of Axiom 4; that the dynamics in the absence of a measurement be controlled by 
+\bse 
+U(t) := \exp(itH)
+\ese 
+for some self adjoint operator $H$? 
+\item How does one \emph{practically} construct observables, including the question of how to find the correct domain such that the operator is at least essentially self adjoint? 
+\een 
+
+\br 
+Clearly for $(i)$ we want $U(t)\circ U(s) = U(t+s)$ and $U(0) = \id_{\cH}$.
+\er 
+
+\subsection{One Parameter Groups and Their Generators}
+
+\bd 
+A \emph{group} is the double $(G,\Diamond)$, where $G$ is a set and $\Diamond\cl G \to G$ satisfying:  
+\ben[label=(\roman*)]
+\item For all $g,h,k\in G$, \hfill (Associativity) 
+\bse 
+(g\Diamond h)\Diamond k = g \Diamond (h\Diamond k).
+\ese 
+\item There exists $e\in G$ such that for all $g\in G$ \hfill (Neutral Element) 
+\bse 
+g\Diamond e = e\Diamond g = g.
+\ese 
+\item For all $g\in G$ there exists $g^{-1}\in G$ such that \hfill (Inverse) 
+\bse 
+g\Diamond g^{-1} = g^{-1} \Diamond g = e.
+\ese 
+\een 
+\ed 
+
+\bd 
+A \emph{Abelian group} is a group is one whose group operation is symmetric. That is for all $g,h\in G$
+\bse 
+g\Diamond h = h\Diamond g.
+\ese 
+\ed 
+
+\br
+Abelian groups are also known as commutative groups and the condition is refered to as the commutativity of the elements with respect to the group operation. 
+\er 
+
+\be 
+The real numbers equipped with addition form an Abelian group, with $e=0\in\R$ and $g^{-1} = -g$. 
+
+Note it is important that we consider all of $\R$, and not just the positive numbers, as in the latter case the inverse would not lie in the group. 
+\ee
+
+\be 
+The set $\R\setminus\{0\}$ form an Abelian group with respect to multiplication, with $e=1$ and $g^{-1}= 1/g$. 
+
+Note here we have to exclude $0$ as $1/0$ is not an element of $\R$.
+\ee
+
+\be 
+The set $\R\setminus\{0\}$ is \emph{not} a group with respect to division as it fails to satisfy associativity. 
+\ee 
+
+\bd 
+A \emph{one-parameter group} is a group whose underlying set is 
+\bse 
+G = \{U(t) \, |\, t\in\R\},
+\ese 
+and whose group operation satisfies 
+\bse 
+U(t)\Diamond U(s) = U\big(\delta(t,s)\big),
+\ese 
+for some $\delta\cl \R\times\R\to\R$. 
+\ed 
+
+\br 
+Unless the group is Abelian then $\delta(s,t) \neq \delta(t,s)$. 
+\er 
+
+We will only deal with Abelian one-parameter groups, in which case one can always reparameterise so that 
+\bse 
+U(t)\Diamond U(s) = U(t+s)
+\ese 
+where the commutativity with respect to $\Diamond$ is inherited from the commutativity with respect to $+$. We also choose the parameterisation such that $U(0) = e$. In particular, we will look at unitary one-parameter groups, i.e. those with 
+\bse 
+G = \{U(t)\in \cL(\cH) \, | \, t\in\R,\, U^*(t)U(t) = \id_{\cH}\, \|U(t)\| = 1\},
+\ese 
+that are \emph{strongly continuous} in the parameter, 
+\bse 
+\forall \psi\in\cH : \, \lim_{t\to t_0} \big(U(t)\psi\big) = U(t_0)\psi.
+\ese
+
+\bd 
+Let $U(\cdot)\cl\R\to\cL(\cH)$ be a unitary, Abelian, one-parameter group (UAOPG). Then its \emph(generator) is the linear map 
+\bi{rrCl}
+A \cl & \cD_{A}^{\text{Stone}} & \to & \cH \\
+& \psi & \mapsto & A\psi := \lim_{\varepsilon\to0}\frac{i}{\varepsilon}\big(U(\varepsilon)\psi-\psi\big),
+\ei 
+where 
+\bse 
+\cD_A^{\text{Stone}} := \big\{\psi\in\cH \, | \, \lim_{\varepsilon\to0}\frac{i}{\varepsilon}\big(U(\varepsilon)\psi-\psi\big) \text{ exists} \big\}.
+\ese 
+\ed 
+
+\br 
+Note 
+\bse 
+\lim_{\varepsilon\to0}\frac{i}{\varepsilon}\big(U(\varepsilon)\psi-\psi\big) = i\lim_{\varepsilon\to0}\frac{U(0+\varepsilon)\psi -U(0)\psi}{\varepsilon} := i \big[U(\cdot)\psi\big]'(0),
+\ese 
+and so we can rewrite
+\bse 
+\cD_A^S \equiv \cD_A^{\text{Stone}} := \big\{\psi\in\cH \, | \, i \big[U(\cdot)\psi\big]'(0) \text{ exists} \big\}.
+\ese 
+Note also that $\big[U(\cdot)\psi\big]'\cl\R\to\cH$.
+\er 
+
+\subsection{Stone's Theorem}
+
+\bt[Stone's Theorem] 
+Let $U(\cdot)$ be a UAOPG that is strongly continuous and whose group operation is the composition of maps, i.e. 
+\bi{rCl}
+U(t) \circ U(s) & = & U(t+s) \\
+U(0) & = & \id_{\cH}.
+\ei 
+Then its generator $A\cl\cD^S_A\to\cH$ is self adjoint on $\cD_A^S$, and
+\bse 
+U(t) = \exp(-itA).
+\ese 
+\et 
+
+Before proving this, consider the following.
+
+\bc
+Given $U(t) = \exp(-itA)$ for some self adjoint $A$ then the Spectral Theorem tells us that $U(t)$ is a UAOPG. 
+\ec
+
+\bq 
+\ben[label=(\roman*)]
+\item First show $U(t)\circ U(s) = U(t+s)$: 
+\bi{rCl}
+U(t)\circ U(s) & := & \exp(-itA) \circ \exp(-isA) \\
+& := & \int_{\R} e^{-it\lambda} e^{-is\lambda} P(d\lambda) \\
+& = & \int_{\R} e^{-i(t+s)} P(d\lambda) \\
+& =: & U(t+s),
+\ei 
+where \Cref{ex:ExpSpectral} has been used.
+\een 
+\item We also have
+\bse 
+U(0) := \exp(0) = \id_{\cH}.
+\ese 
+\item Now show Abelian property: 
+\bi{rCl}
+U^*(t) & := & \bigg(\int_{\R} e^{-it\lambda}P(d\lambda)\bigg)^* \\
+& = & \int_{\R} e^{+it\lambda}P(d\lambda) \\
+& =: & U(-t).
+\ei 
+Then from the above we have $U^*(t)U(t) = U(-t+t) = U(0) = \id_{\cH}$. Then noticing that $\|U(t)\| = \|U^*(t)\|$ it follows that 
+\bse 
+\|U(t)\| = \sqrt{\|\id_{\cH}\|} = \sqrt{1} = 1,
+\ese 
+where we have used the fact that the norm is strictly positive to remove the negative root, and so it is unitary. 
+\item Finally show that it is a group. This is easily done, and we have $e=\id_{\cH}=U(0)$ and $[U(t)]^{-1} = U(-t)$.
+\eq 
+
+\bc 
+\label{Cor:StoneDomaint}
+Let $\psi\in\cD_A^S$ for some generator $A$ and $t\in\R$. Then 
+\bse 
+[U(\cdot)\psi]'(t) = -iAU(t)\psi,
+\ese 
+and 
+\bse 
+U(t)\cD_A^S = \cD_A^S.
+\ese 
+\ec 
+
+Now we can proceed with the proof of Stone's Theorem. To do so, we will need to show:
+\ben[label=(\roman*)]
+\item The generator $A$ is densely defined (otherwise we $A^*$ wouldnt be defined properly).
+\item $A$ is symmetric on $\cD_A^S$ and that it is essentially self adjoint.
+\item $U(t) = \exp(-itA^{**})$, from which it follows that $A=A^{**}$ and so it is self adjoint (as $A^{**}$ is).
+\een 
+
+\bq (Stone's Theorem)
+\ben[label=(\roman*)]
+\item Let $\psi\in\cH$. If we can show that an arbitrarily small neighbourhood $\cN$ around $\psi$ contains a $\varphi\in\cD_A^S$, then we know $\cD_A^S$ is dense in $\cH$. Consider the real family, for all $\tau\in\R$ 
+\bse
+\psi_{\tau} := \int_0^{\tau} dr U(r) \psi,
+\ese 
+which satisfies 
+\bse 
+\lim_{\tau\to0}\bigg(\frac{\psi_{\tau}}{\tau}\bigg) = \psi.
+\ese 
+This is just the idea of the points in a neighbourhood, and so we know, therefore, that there exists a $\tau_0$ such that $\psi_{\tau_0}\in\cN$. Now consider 
+\bi{rCl}
+\big(U(\varepsilon)\psi_{\tau}-\psi_{\tau}\big) & := & U(\varepsilon)\int_0^{\tau} drU(r)\psi - \int_0^{\tau}U(r)\psi \\
+& = & \int_0^{\tau}dr U(\varepsilon+\tau)\psi -\int_0^{\tau} dr U(r)\psi \\ 
+& = & \int_0^{\varepsilon+\tau} dr U(r) \psi - \int_0^{\tau} dr U(r)\psi \\ 
+& = & \int_{\tau}^{\tau+\varepsilon}drU(r)\psi + \int_{\varepsilon}^{\tau} drU(r)\psi - \int_0^{\tau}drU(r)\psi \\
+& = & \int_{\tau}^{\tau+\varepsilon}drU(r)\psi - \int^{\varepsilon}_{\tau} drU(r)\psi - \int_0^{\tau}drU(r)\psi \\
+& = & \int_{\tau}^{\tau+\varepsilon}drU(r)\psi - \int_0^{\varepsilon}drU(r)\psi \\
+& = & U(\tau)\int_0^{\varepsilon}drU(r)\psi - \int_0^{\varepsilon}drU(r)\psi \\
+& = & \big[U(\tau) - \id_{\cH}\big]\psi_{\varepsilon}.
+\ei 
+Now using the fact that $\|U(\tau)\|=\|\id_{\cH}\|=1$ and so they're bounded, we can take a limit and push it through the operators. Thus we have 
+\bi{rCl}
+i\big[ U(\cdot)\psi_{\tau} \big]'(0) & \equiv &  \lim_{\varepsilon\to0}\frac{i}{\varepsilon}\big(U(\varepsilon)\psi_{\tau} - \psi_{\tau}\big) \\
+& = & i\big[U(\tau) - \id_{\cH}\big]\lim_{\varepsilon\to0}\frac{1}{\varepsilon}\psi_{\varepsilon} \\
+& = & i\big[U(\tau) - \id_{\cH}\big]\psi,
+\ei 
+which is an element of $\cH$, and so we know that $\psi_{\tau}\in\cD_A^S$ and therefore there exists a $\psi_{\tau_0}\in\cN\cap\cD_A^S$. 
+\item Let $\varphi,\psi\in\cD_A^S$, then 
+\bi{rCl}
+\braket{\varphi}{A\psi} & := & \braket{\varphi}{ \lim_{\varepsilon\to0}\frac{i}{\varepsilon}\big(U(\varepsilon)\psi -\psi\big)} \\ 
+& = & \lim_{\varepsilon\to0} \braket{\frac{-i}{\varepsilon}\big(U^*(\varepsilon)-\id_{\cH}\big)\varphi}{\psi} \\ 
+& = & \braket{\lim_{\varepsilon\to0}\frac{i}{-\varepsilon}\big(U(-\varepsilon)-\id_{\cH}\big)\varphi}{\psi} \\
+& = & \braket{\lim_{\varepsilon\to0}\frac{i}{\varepsilon}\big(U(\varepsilon)-\id_{\cH}\big)\varphi}{\psi}\\
+& =: & \braket{A\varphi}{\psi},
+\ei 
+where we have used the continuity of the inner product to move the limit in and out, the result $U^*(t)=U(-t)$, the fact that the identity is self adjoint and the fact that we're taking the limit to `ignore' the minus signs on second to last line.
+
+We now want to show that it is essentially self adjoint. Recalling \Cref{thrm:SymmetricEssentialSelfAdjoint}, we need to check if: for $z\in\C\setminus\R$ that 
+\bse 
+\ker(A^*-\overline{z}) = \{0_{\cH}\} = \ker(A^*-z).
+\ese 
+Let $\varphi\in\ker(A^*-\overline{z})\cap\cD_{A^*}^S$. Then for all $\psi\in\cD_A^S$
+\bi{rCl}
+\big[ \braket{\varphi}{U(\cdot)\psi}\big]'(t) & = & \braket{\varphi}{[U(\cdot)\psi]'(t)} \\
+& = & \braket{\varphi}{-iAU(t)\psi} \\
+& = & -i\braket{A^*\varphi}{U(t)\psi} \\
+& = & -i \braket{\overline{z}\varphi}{ U(t)\psi} \\
+& = & -iz \braket{\varphi}{U(\cdot)\psi}(t) \\
+\implies \braket{\varphi}{U(\cdot)\psi}(t) & = & \braket{\varphi}{\psi} e^{-izt},
+\ei
+where we have used \Cref{Cor:StoneDomaint} and the fact that $U(0)=\id_{\cH}$. But, since $z$ is purely imaginary, the exponential is unbounded and so the RHS is unbounded. However, the LHS is bounded (as $U(\cdot)$ is bounded) and so the only way the equality holds is if $\braket{\varphi}{\psi} =0$. Finally since we took all $\psi\in\cH$ it follows that $\varphi=\{0_{\cH}\}$ and so $\ker(A^*-\overline{z})=\{0_{\cH}\}$. The proof for $\ker(A^*-z)$ follows trivially from this result --- i.e. the RHS just becomes unbounded in the opposite direction. 
+\item We know that $A$ is essentially self adjoint, which means that $A^{**}$ is self adjoint. Now construct 
+\bse 
+\widetilde{U}(t) := \exp(-itA^{**}) = \int_{\R} e^{it\lambda}P_{A^{**}}(d\lambda).
+\ese 
+Now let $\psi\in\cD_A^S\se\cD_{A^{**}}$ and consider the real family
+\bse
+\psi(t) := \big[\exp(-itA^{**})-U(t)\big]\psi.
+\ese 
+Then 
+\bse 
+\psi'(t) = \big[-tA^{**}\exp(-itA^{**}) + iAU(t)\big]\psi = -iA^{**}\psi(t),
+\ese 
+where we have used the fact that $A=A^{**}$ on $\cD_A^S$. Then we have 
+\bi{rCl}
+(\|\psi(t)\|^2)' & := & \braket{\psi(t)}{\psi(t)}' \\
+& = & 2\Re \braket{\psi(t)}{\psi'(t)} \\
+& = & 2 \Re\big( -i \braket{\psi(t)}{A^{**}\psi(t)} \big) \\
+& = & 0,
+\ei 
+where we have used the fact that $\braket{\psi}{A^{**}\psi(t)} \in \R$ as $A^{**}$ is self adjoint. So we have that $\|\psi(t)\|$ is a constant w.r.t. $t$. From the definition, we have $\psi(0)=0$ and so $\|\psi(t)\| = \|\psi(0)\| = 0$, which from the definition of the norm tells us $\psi(t) = 0$ for all $t$. Finally it follows that 
+\bse 
+\exp(-itA) =: U(t) = \exp(-itA^{**}) \quad \implies \quad A=A^{**}.
+\ese
+\een 
+\eq 
+
+\subsection{Domains of Essential Self Adjointness ("Cores")}
+
+Stone's Theorem showed us that the generator $A\cl \cD_A^S\to \cH$ is self adjoint. Sometimes a compromise in choosing the domain is in order, as we shall see in the two section's time.
+
+\bc 
+\label{Cor:StoneDomainCompromise}
+Inspection of the part $(ii)$ of the proof shows that if one considers $A\cl\cD\to\cH$ for some \emph{dense} $\cD\se\cD_A^S$ that also satisfies $U(t)\cD=\cD_A$, then we $A$ is essentially self adjoint on $\cD$.
+\ec 
+
+\subsection{Position, Momentum and Angular Momentum}
+
+Employ Stone's Theorem to properly and easily define these three operators in quantum mechanical systems. For the rest of this lecture we shall take $\cH=L^2(\R^3,\lambda) =: L^2$ where $\lambda$ is the Lebesgue measure. 
+
+\bd
+The \emph{position operators}, denoted $Q^j$ for $j=1,2,3$, are defined as the generators of 
+\bse 
+U^j(\cdot) \cl L^2 \to L^2,
+\ese 
+with 
+\bse 
+\big(U^j(t)\psi)(x) := \psi(x) e^{-itx^j},
+\ese 
+for $(x) := (x_1,x_2,x_3)$. That is, they are the self adjoint 
+\bse 
+Q^j\cl \cD_{Q^j}^S \to L^2
+\ese 
+with 
+\bse 
+(Q^j\psi)(x) = x^j\psi(x).
+\ese 
+\ed 
+
+\br
+Note clearly $U(t)\circ U(s) = U(t+s)$, $U(0) = \id_{L^2}$ and $\|U(t)\psi\| = \|\psi\|$ which tells us $\|U(t)\|=1$, all of which are required for $U(t)$ to be a UAOPG.
+\er 
+
+\bd 
+The \emph{momentum operators}, denoted $P_j$ for $j=1,2,3$, are the generators of 
+\bse 
+U_j(\cdot) \cl L^2 \to L^2,
+\ese 
+with 
+\bse 
+\big(U_j(a)\psi)(x) := \psi(...,x^j-a,...),
+\ese 
+i.e. they shift the $j^{\text{th}}$ slot to the right by $a$. That is they are the self adjoint operators on their Stone domain that satisfy
+\bse
+P_j\psi = -i\partial_j\psi.
+\ese 
+\ed 
+
+\br
+Note this is exactly the definition we used for the action of the operator in Lecture 9. 
+\er 
+
+\bd 
+The \emph{orbital angular momentum operators}, denoted $L_j$ for $j=1,2,3$, are the generators of 
+\bse 
+U_j(\cdot) \cl L^2 \to L^2,
+\ese 
+with 
+\bse 
+\big(U_j(\alpha)\psi)(x) := \psi(D_j(\alpha)x),
+\ese 
+where $D_j(\alpha)\cl\R^3\to\R^3$ is the operator that describes the rotation about the $j^{\text{th}}$ axis by angle $\alpha$. They satisfy 
+\bi{rCl}
+(L_1\psi)(x) & = & -i (x^2\partial_3\psi - x^3\partial_2\psi) \\
+(L_2\psi)(x) & = & -i (x^3\partial_1\psi - x^1\partial_3\psi) \\
+(L_3\psi)(x) & = & -i (x^1\partial_2\psi - x^2\partial_1\psi) 
+\ei 
+\ed 
+
+\bc
+\label{cor:OrbitalSpectrum}
+The spectrum for the orbital angular momentum is contained within the integers; $\sigma(L_j)\se \Z$ for $j=1,2,3$.
+\ec 
+
+\bq 
+From Stone's theorem we have 
+\bse 
+U_j(\alpha) = \exp(-i\alpha L_j),
+\ese
+which together with $D_j(\alpha+2\pi) = D_j(\alpha)$ gives 
+\bse 
+\exp(-i2\pi L_j) = \id_{\cH}.
+\ese 
+Then, from the fact that $L_j$ is self adjoint, we can use the Spectral theorem to decompose both sides 
+\bse 
+\int_{\R} e^{-i2\pi \lambda }P_{L_j}(d\lambda) = \int_{\R} P_{L_j}(d\lambda),
+\ese 
+and so $\lambda\in\Z$. 
+\eq 
+
+\subsection{Schwartz Space $S(\R^d)$}
+
+As we have just seen, Stone's theorem gives us a nice way to define the position, momentum and orbital angular momentum operators. However there are two problems with the definitions we have, both of which relate to their Stone domains. They are 
+\ben[label=(\roman*)]
+\item $\cD_Q^S \neq \cD_P^S \neq \cD_L^S \neq \cD_Q^S$
+\item $\cD_Q^S \neq \cD_{Q\circ Q}^S \neq \cD_{Q\circ Q\circ Q}^S \neq ...$ and similarly for $P$ and $L$.
+\een 
+
+This, at first, might not seem like such a big deal but on a second look we see that it means havoc when it comes to trying to define the QM version of kinetic energy as $(P\circ P)/2m$. The problem is especially bad when it comes to considering commutators, as highlighted before. 
+
+We get around this problem using the compromise given in \Cref{Cor:StoneDomainCompromise}. 
+
+\bd 
+The \emph{Schwartz Space} on $\R^d$, denoted $S(\R^d)$, is the vector space with set 
+\bse
+S(\R^d) := \{ \psi\in C^{\infty}(\R^d) \, |\, \sup_{x\in\R^d} |x^{\alpha}(\partial_{\beta}\psi)(x)|<\infty, \, \forall\alpha,\beta\in\N_0^{\times d}\},
+\ese
+where 
+\bse 
+\N_0^{\times d} := \underbrace{N_0\times...\times N_0}_{d\text{-fold}},
+\ese 
+and 
+\bi{rCl} 
+x^{\alpha} \equiv x^{(\alpha_1,...,\alpha_d)} & := & (x^1)^{\alpha_1}...(x^d)^{\alpha_d}, \\
+\partial_{\beta} \equiv \partial_{(\beta_1,...,\beta_d)} & := & (\partial_1)^{\beta_1}...(\partial_d)^{\beta^d}.
+\ei
+\ed 
+
+\br 
+The Schwartz Space is also known as the space of rapidly decaying test functions. 
+\er 
+
+\br
+Clearly the space $C^{\infty}_c(\R^d)$, as defined in footnote 15 in Lecture 9, is a contained within $S(\R^d)$.
+\er
+
+\bl
+The Schwartz space is closed under pointwise multiplication; if $\psi,\varphi\in S(\R^d)$ then $\psi\bullet\varphi\in S(R^d)$. In fact we have the Schwartz \emph{algebra} $(S(\R^d),+,\cdot,\bullet)$.
+\el
+
+\bq 
+This result follows simply from the so called \emph{Leibniz Rule}, which is an extension of the product rule.\footnote{See Dr. Schuller's Lecture's on the Geometric Anatomy of Theoretical Phsyics for a definition in context.}
+\bi{rCl}
+\sup_{x\in\R^d} \big{|}x^{\alpha}\big(\partial_{\beta}(\psi\bullet \varphi)\big)(x)\big{|} & = & \sup_{x\in\R^d} \big{|} x^{\alpha} \big(\partial_{\beta}(\psi)\bullet\varphi + \psi\bullet\partial_{\beta}(\varphi)\big)(x)\big{|} \\ 
+& \leq & \sup_{x\in\R^d} \big{|} x^{\alpha} \big(\partial_{\beta}(\psi)\bullet\varphi\big)(x)\big{|} +
+\sup_{x\in\R^d} \big{|} x^{\alpha}\big( \psi\bullet\partial_{\beta}(\varphi)\big)(x)\big{|} \\
+& < & \infty.
+\ei 
+Then, using the fact that the pointwise multiplication of two smooth functions is smooth, we have $\psi\bullet\varphi\in S(\R^d)$. Finally using the linearity of everything involved we get the algebra.
+\eq 
+
+\bl
+For $1\leq p \leq \infty$ we have $S(\R^d)\ss L^p(\R^d)$.
+\el 
+
+\bq 
+Let $\psi\in S(\R^d)$. Then $|\psi(x)|<\infty$ for all $x\in\R^d$, and so it is integrable. Then \Cref{cor:ContinuousMeasurable} tells us that it is measurable with respect to the Borel $\sigma$-algebras, so $\psi\in L^1(\R^d)$. Then finally from $L^1(\R^d)\ss L^p(\R^d)$ for all $p>1$, the result follows.
+\eq 
+
+\bl 
+\label{lem:SchwartzSpaceFourierIsomorphism}
+One can show that the Fourier Transform is a linear isomorphism from $S(\R^d)$ onto itself.\footnote{See lecture 18.}
+\el 
+
+\bt 
+The Schwartz space as defined above satisfies 
+\ben[label=(\roman*)]
+\item $S(\R^d)\se L^2(\R^d,\lambda)$ is dense, 
+\item $S(\R^3)\se \cD_Q^S,\cD_P^S,\cD_L^S$ is dense, 
+\item $Q^j\cl S(\R^3) \to S(\R^3)$ is essentially self adjoint. Same for $P_j$ and $L_j$.
+\een 
+\et 
+
+\br 
+From the last condition we see that we can repeatedly apply the operators, in any order, to a system. This fixes our problem above. 
+\er 
